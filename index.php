@@ -77,8 +77,8 @@ $diagnostics->updateStatus($car_1, 'Двигун потребує ремонту
 
 echo "\n\n";
 
-$statuses = $diagnostics->getCarStatuses();
-var_dump($statuses);
+$carStatuses = $diagnostics->getCarStatuses();
+var_dump($carStatuses);
 
 echo "\n\n";
 
@@ -89,7 +89,7 @@ $repair->engine($mechanic, $car_1, $diagnostics);
 
 echo "\n\n";
 
-$statuses = $diagnostics->getCarStatuses();
-var_dump($statuses);
+$carStatuses = $diagnostics->getCarStatuses();
+var_dump($carStatuses);
 
 // Повертаємо вже відремонтовану машину водію
