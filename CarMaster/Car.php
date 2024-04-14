@@ -1,6 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CarMaster;
+
+use DateTime;
+use Exception;
 
 class Car // авто
 {
@@ -8,14 +13,20 @@ class Car // авто
     private string $number; // державний номер
     private int $mileage; // пробіг
     private string $color; // колір
-    private int $release; // дата випуску
-    public function __construct(string $model, string $number, int $mileage, string $color, int $release)
+    private DateTime $releaseDate;
+    private string $vinCode;
+
+    /**
+     * @throws Exception
+     */
+    public function __construct(string $model, string $number, int $mileage, string $color, $releaseDate, string $vinCode)
     {
         $this->model = $model;
         $this->number = $number;
         $this->mileage = $mileage;
         $this->color = $color;
-        $this->release = $release;
+        $this->releaseDate = new DateTime($releaseDate);
+        $this->vinCode = $vinCode;
     }
 
     /**
@@ -83,18 +94,34 @@ class Car // авто
     }
 
     /**
-     * @param int $release
+     * @return DateTime
      */
-    public function setRelease(int $release): void
+    public function getReleaseDate(): DateTime
     {
-        $this->release = $release;
+        return $this->releaseDate;
     }
 
     /**
-     * @return int
+     * @param DateTime $releaseDate
      */
-    public function getRelease(): int
+    public function setReleaseDate(DateTime $releaseDate): void
     {
-        return $this->release;
+        $this->releaseDate = $releaseDate;
+    }
+
+    /**
+     * @param string $vinCode
+     */
+    public function setVinCode(string $vinCode): void
+    {
+        $this->vinCode = $vinCode;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVinCode(): string
+    {
+        return $this->vinCode;
     }
 }

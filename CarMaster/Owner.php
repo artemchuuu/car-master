@@ -1,17 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CarMaster;
 
 require_once 'Client.php';
 
-class Driver extends Client // власник автівки
+class Owner extends Client // власник автівки
 {
     private string $surname; // прізвище
     private int $age; // вік
-    private int $balance; // баланс гаманця
+    private float $balance; // баланс гаманця
     private array $cars = [];
 
-    function __construct(string $name, string $surname, int $age, int $phone, string $address, int $balance)
+    function __construct(string $name, string $surname, int $age, int $phone, string $address, float $balance)
     {
         $this->name = $name;
         $this->surname = $surname;
@@ -62,9 +64,9 @@ class Driver extends Client // власник автівки
     }
 
     /**
-     * @return int
+     * @return float
      */
-    public function getBalance(): int
+    public function getBalance(): float
     {
         return $this->balance;
     }

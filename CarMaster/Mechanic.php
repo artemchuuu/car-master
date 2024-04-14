@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CarMaster;
 
 require_once "Employees.php";
 
 class Mechanic extends Employees // механік
 {
-    public function __construct(string $name, int $age, int $salary)
+    public function __construct(string $name, int $age, float $salary)
     {
         $this->name = $name;
         $this->age = $age;

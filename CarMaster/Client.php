@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CarMaster;
 
 abstract class Client
@@ -25,17 +27,17 @@ abstract class Client
     }
 
     /**
-     * @param string $phone
+     * @param int $phone
      */
-    public function setPhone(string $phone): void
+    public function setPhone(int $phone): void
     {
         $this->phone = $phone;
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getPhone(): string
+    public function getPhone(): int
     {
         return $this->phone;
     }

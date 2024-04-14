@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CarMaster;
 
 require_once "Client.php";
 
-class Company extends Client // компанія
+class OwnerCompany extends Client // компанія
 {
     private string $email; // електронна пошта компанії
     private string $website; // веб сайт
-    public function __construct(string $name, string $address, string $phone, string $email, string $website)
+    public function __construct(string $name, string $address, int $phone, string $email, string $website)
     {
         $this->name = $name;
         $this->address = $address;

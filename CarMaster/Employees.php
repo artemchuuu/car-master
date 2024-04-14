@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CarMaster;
 
 class Employees // співробітник
 {
     protected string $name; // ім'я співробітника
     protected int $age; // вік
-    protected int $salary; // зарплата
+    protected float $salary; // зарплата
 
     /**
      * @return void
@@ -57,9 +59,9 @@ class Employees // співробітник
     }
 
     /**
-     * @return int
+     * @return float
      */
-    public function getSalary(): int
+    public function getSalary(): float
     {
         return $this->salary;
     }
