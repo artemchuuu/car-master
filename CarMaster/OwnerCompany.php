@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace CarMaster;
 
-require_once "Client.php";
-
 class OwnerCompany extends Client // компанія
 {
     private string $email; // електронна пошта компанії

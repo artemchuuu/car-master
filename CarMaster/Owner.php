@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace CarMaster;
 
-require_once 'Client.php';
-
 class Owner extends Client // власник автівки
 {
     private string $surname; // прізвище

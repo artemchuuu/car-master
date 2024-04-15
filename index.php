@@ -2,12 +2,7 @@
 
 declare(strict_types=1);
 
-require_once "CarMaster/Owner.php";
-require_once "CarMaster/Car.php";
-require_once "CarMaster/Diagnostics.php";
-require_once "CarMaster/OwnerCompany.php";
-require_once "CarMaster/Mechanic.php";
-require_once "CarMaster/Repair.php";
+require_once "autoload.php";
 
 use CarMaster\Owner;
 use CarMaster\Car;
@@ -44,10 +39,14 @@ echo "Адреса: " . $owner->getAddress() . "\n";
 echo "Номер телефону: " . $owner->getPhone() . "\n";
 echo "Баланс: " . $owner->getBalance() . "\n";
 
+echo "Машини що належать власнику: ";
+
 // Тут ми перебираємо масив автівок які є у нашого водія
-//foreach ($driver->getCars() as $car) {
-//    echo $car->getModel() . ' - ' . $car->getReleaseDate() . ' - ' . $car->getColor() . "\n";
-//}
+foreach ($owner->getCars() as $car) {
+    echo $car->getModel() . ' - ' . $car->getReleaseDate()->format('y-d-m') . ' - ' . $car->getVinCode() . "; ";
+}
+
+echo "\n";
 
 $mechanic = new Mechanic('Dima', 32, 999.99);
 

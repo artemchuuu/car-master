@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace CarMaster;
 
-require_once "Mechanic.php";
-require_once "Car.php";
-require_once "Diagnostics.php";
-
 class Repair // ремонт
 {
     // ремонт двигуна
