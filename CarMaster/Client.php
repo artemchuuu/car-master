@@ -6,9 +6,9 @@ namespace CarMaster;
 
 abstract class Client
 {
-    protected string $name;
-    protected int $phone;
-    protected string $address;
+    protected string $name; // ім'я
+    protected int $phone; // телефон
+    protected string $address; // адреса
 
     /**
      * @param string $name

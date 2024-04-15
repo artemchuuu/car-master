@@ -16,6 +16,7 @@ class Diagnostics // диагностика
     public function testing(Car $car): void {
         echo 'Тестування автомобіля ' . $car->getModel() . ' VIN: ' . $car->getVinCode() . ":\n" . "- Тестування електричної системи\n" . "- Тестування гальмування\n";
     }
+    // метод для оновлення статусу авто
     public function updateStatus(Car $car,string $status): void {
         $carKey = $car->getVinCode();
         $this->carStatuses[$carKey] = $status;

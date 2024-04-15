@@ -60,7 +60,7 @@ echo "\n** Діагностика **\n\n";
 
 $diagnostics = new Diagnostics();
 
-// Проводимо діагностику усіх авсо які є у власника
+// Проводимо діагностику усіх авто які є у власника
 foreach ($owner->getCars() as $car) {
     $diagnostics->visualInspection($car);
     $diagnostics->testing($car);
@@ -71,7 +71,7 @@ foreach ($owner->getCars() as $car) {
 //$diagnostics->visualInspection($car_1);
 
 
-// Після діагностиви виявляється проблема
+// Після діагностики виявляється проблема
 $diagnostics->updateStatus($car_1, 'Двигун потребує ремонту');
 
 echo "\n\n";

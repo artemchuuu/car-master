@@ -9,7 +9,7 @@ class Owner extends Client // власник автівки
     private string $surname; // прізвище
     private int $age; // вік
     private float $balance; // баланс гаманця
-    private array $cars = [];
+    private array $cars = []; // масив автівок
 
     function __construct(string $name, string $surname, int $age, int $phone, string $address, float $balance)
     {

@@ -13,8 +13,8 @@ class Car // авто
     private string $number; // державний номер
     private int $mileage; // пробіг
     private string $color; // колір
-    private DateTime $releaseDate;
-    private string $vinCode;
+    private DateTime $releaseDate; // дата релізу
+    private string $vinCode; // VIN код авто
 
     /**
      * @throws Exception
