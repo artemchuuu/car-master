@@ -4,30 +4,18 @@ declare(strict_types=1);
 
 namespace CarMaster;
 
+use CarMaster\Exceptions\VinCodeValidationException;
 use DateTime;
-use Exception;
 
-class Car // авто
+class Car
 {
-    private string $model; // модель автівки
-    private string $number; // державний номер
-    private int $mileage; // пробіг
-    private string $color; // колір
-    private DateTime $releaseDate; // дата релізу
-    private string $vinCode; // VIN код авто
-
-    /**
-     * @throws Exception
-     */
-    public function __construct(string $model, string $number, int $mileage, string $color, $releaseDate, string $vinCode)
-    {
-        $this->model = $model;
-        $this->number = $number;
-        $this->mileage = $mileage;
-        $this->color = $color;
-        $this->releaseDate = new DateTime($releaseDate);
-        $this->vinCode = $vinCode;
-    }
+    private string $model;
+    private string $stateNumber;
+    private int $mileage;
+    private string $color;
+    private DateTime $releaseDate;
+    private string $vinCode;
+    private Brand $brand;
 
     /**
      * @param string $model
@@ -46,19 +34,19 @@ class Car // авто
     }
 
     /**
-     * @param string $number
+     * @param string $stateNumber
      */
-    public function setNumber(string $number): void
+    public function setNumber(string $stateNumber): void
     {
-        $this->number = $number;
+        $this->stateNumber = $stateNumber;
     }
 
     /**
      * @return string
      */
-    public function getNumber(): string
+    public function getStateNumber(): string
     {
-        return $this->number;
+        return $this->stateNumber;
     }
 
     /**
@@ -114,6 +102,7 @@ class Car // авто
      */
     public function setVinCode(string $vinCode): void
     {
+        $this->validVinCode($vinCode);
         $this->vinCode = $vinCode;
     }
 
@@ -123,5 +112,33 @@ class Car // авто
     public function getVinCode(): string
     {
         return $this->vinCode;
+    }
+
+    /**
+     * @return Brand
+     */
+    public function getBrand(): Brand
+    {
+        return $this->brand;
+    }
+
+    /**
+     * @param Brand $brand
+     * @return void
+     */
+    public function setBrand(Brand $brand): void
+    {
+        $this->brand = $brand;
+    }
+
+    /**
+     * @param string $vinCode
+     * @return void
+     */
+    public function validVinCode(string $vinCode): void
+    {
+        if (strlen($vinCode) != 17 ) {
+            throw new VinCodeValidationException('VIN код повинен складатися з 17 символів.');
+        }
     }
 }

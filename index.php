@@ -4,91 +4,116 @@ declare(strict_types=1);
 
 require_once "autoload.php";
 
+use CarMaster\Exceptions\VinCodeValidationException;
+use CarMaster\Exceptions\NameValidationException;
 use CarMaster\Owner;
 use CarMaster\Car;
 use CarMaster\Diagnostics;
 use CarMaster\OwnerCompany;
 use CarMaster\Mechanic;
 use CarMaster\Repair;
+use CarMaster\Brand;
 
-$company = new OwnerCompany('CarMaster', 'Broadway Street 1/1', 963391459, 'carmaster@company.com', 'carmaster.com');
+try {
+    $company = new OwnerCompany();
+    $company->setName('CarMaster');
+    $company->setAddress('Broadway Street 1/1');
+    $company->setPhone(963391459);
+    $company->setEmail('carmaster@company.com');
+    $company->setWebsite('car-master.com');
 
-echo "\n** Дані компанії **\n\n";
+    $car_1 = new Car();
+    $car_1->setBrand(Brand::Toyota);
+    $car_1->setModel('RAV4');
+    $car_1->setNumber('AA0000AA');
+    $car_1->setMileage(1000);
+    $car_1->setColor('White');
+    $car_1->setVinCode('2334GSD43SER527GA');
+    $car_1->setReleaseDate(new DateTime('2022-03-17'));
 
-echo "\n" . "Назва компанії: " . $company->getName() . "\n";
-echo "Адреса: " . $company->getAddress() . "\n";
-echo "Номер телефону: " . $company->getPhone() . "\n";
-echo "Електронна пошта: " . $company->getEmail() . "\n";
-echo "Сайт: " . $company->getWebsite() . "\n\n";
+    $car_2 = new Car();
+    $car_2->setBrand(Brand::Renault);
+    $car_2->setModel('Duster');
+    $car_2->setNumber('AA7777AA');
+    $car_2->setMileage(1000);
+    $car_2->setColor('Black');
+    $car_2->setVinCode('342FGJAL34FQWPJ32');
+    $car_2->setReleaseDate(new DateTime('2020-03-17'));
 
-$car_1 = new Car('BMW 3-Series', 'AA0000AA', 30000, 'White', "2020-3-4", "1FTEX1CP3JFA13968"); // створюємо перший об'єкт авто
-$car_2 = new Car('Audi RS7', 'AA7777AA', 15000, 'Silver', "2024-6-3" , "2GDRX4CH5HSF14534");
+    $owner = new Owner();
+    $owner->setName('Mike');
+    $owner->setSurname('Smith');
+    $owner->setAge(23);
+    $owner->setPhone(983421579);
+    $owner->setBalance(2389.49);
+    $owner->setAddress('Primorska 1/F');
+    $owner->addCar($car_1);
+    $owner->addCar($car_2);
 
-//$car_1->setReleaseDate(new DateTime('2007-03-17')); для зміни дати випуску
+    $mechanic = new Mechanic();
+    $mechanic->setName('John');
+    $mechanic->setSurname('Elton');
+    $mechanic->setAge(32);
+    $mechanic->setSalary(999.99);
 
-$owner = new Owner('Mike', 'Smith', 23, 983421579, 'Grow Street 1/4', 2999.99); // створюємо нашого першого власника авто
-$owner->addCar($car_1);
-$owner->addCar($car_2);
+    $diagnostics = new Diagnostics();
 
-echo "\n** Дані власника автомобіля **\n\n";
+    echo "\n\n================================================\n\n";
 
-echo "\n" . "Ім'я водія: " . $owner->getName() . "\n";
-echo "Прізвище: " . $owner->getSurname() . "\n";
-echo "Вік: " . $owner->getAge() . "\n";
-echo "Адреса: " . $owner->getAddress() . "\n";
-echo "Номер телефону: " . $owner->getPhone() . "\n";
-echo "Баланс: " . $owner->getBalance() . "\n";
+    echo 'Назва компанії: ' . $company->getName() . "\n";
+    echo 'Адреса: ' . $company->getAddress() . "\n";
+    echo 'Телефон: ' . $company->getPhone() . "\n";
+    echo 'Ел. пошта: ' . $company->getEmail() . "\n";
+    echo 'Сайт: ' . $company->getWebsite() . "\n\n";
 
-echo "Машини що належать власнику: ";
+    echo "\n\n================================================\n\n";
 
-// Тут ми перебираємо масив автівок які є у нашого водія
-foreach ($owner->getCars() as $car) {
-    echo $car->getModel() . ' - ' . $car->getReleaseDate()->format('y-d-m') . ' - ' . $car->getVinCode() . "; ";
+    echo 'Ім\'я власника: ' . $owner->getName() . "\n";
+    echo 'Прізвище: ' . $owner->getSurname() . "\n";
+    echo 'Вік: ' . $owner->getAge() . "\n";
+    echo 'Адреса: ' . $owner->getAddress() . "\n";
+    echo 'Телефон: ' . $owner->getPhone() . "\n";
+    echo 'Баланс гаманця: ' . $owner->getBalance() . "\n";
+    echo 'Автівки власника: ' . "\n";
+
+    foreach ($owner->getCars() as $car) {
+        echo $car->getBrand()->value . ' ' . $car->getModel() . ' ' . $car->getVinCode() . "\n";
+    }
+
+    echo "\n\n================================================\n\n";
+
+    echo 'Ім\'я механіка: ' . $mechanic->getName() . "\n";
+    echo 'Прізвище: ' . $mechanic->getSurname() . "\n";
+    echo 'Вік: ' . $mechanic->getAge() . "\n";
+    echo 'Зарплата: ' . $mechanic->getSalary() . "\n";
+
+    echo "\n\n================================================\n\n";
+
+    foreach ($owner->getCars() as $car) {
+        $diagnostics->visualInspection($car);
+        $diagnostics->testingCar($car);
+    }
+
+    $diagnostics->updateCarStatus($car_1, 'Двигун потребує ремонту');
+
+    echo "\n\n================================================\n\n";
+
+    $carStatuses = $diagnostics->getCarStatuses();
+    var_dump($carStatuses);
+
+    echo "\n\n================================================\n\n";
+
+    echo "\n** Процес ремонту двигуна **\n\n";
+    $repair = new Repair();
+    $repair->engine($mechanic, $car_1, $diagnostics);
+
+    echo "\n\n================================================\n\n";
+
+    $carStatuses = $diagnostics->getCarStatuses();
+    var_dump($carStatuses);
+
+} catch (VinCodeValidationException $e) {
+    echo "Помилка: некорректний VIN: " . $e;
+} catch (NameValidationException $e) {
+    echo "Помилка в імені: " . $e;
 }
-
-echo "\n";
-
-$mechanic = new Mechanic('Dima', 32, 999.99);
-
-echo "\n** Дані механіка **\n\n";
-
-echo "\n" . "Ім'я механіка: " . $mechanic->getName() . "\n";
-echo "Вік: " . $mechanic->getAge() . "\n";
-echo "Зарплата: " . $mechanic->getSalary() . "\n";
-
-echo "\n** Діагностика **\n\n";
-
-$diagnostics = new Diagnostics();
-
-// Проводимо діагностику усіх авто які є у власника
-foreach ($owner->getCars() as $car) {
-    $diagnostics->visualInspection($car);
-    $diagnostics->testing($car);
-}
-
-// Якщо ж ми хочемо продіагностувати саме одру із автівок
-//$diagnostics->testing($car_1);
-//$diagnostics->visualInspection($car_1);
-
-
-// Після діагностики виявляється проблема
-$diagnostics->updateStatus($car_1, 'Двигун потребує ремонту');
-
-echo "\n\n";
-
-$carStatuses = $diagnostics->getCarStatuses();
-var_dump($carStatuses);
-
-echo "\n\n";
-
-echo "\n** Процес ремонту двигуна **\n\n";
-
-$repair = new Repair();
-$repair->engine($mechanic, $car_1, $diagnostics);
-
-echo "\n\n";
-
-$carStatuses = $diagnostics->getCarStatuses();
-var_dump($carStatuses);
-
-// Повертаємо вже відремонтовану машину водію

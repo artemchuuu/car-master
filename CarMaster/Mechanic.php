@@ -4,14 +4,8 @@ declare(strict_types=1);
 
 namespace CarMaster;
 
-class Mechanic extends Employees // механік
+class Mechanic extends Employees
 {
-    public function __construct(string $name, int $age, float $salary)
-    {
-        $this->name = $name;
-        $this->age = $age;
-        $this->salary = $salary;
-    }
     public function startOfTheRepair(): void
     {
         parent::startOfTheRepair();

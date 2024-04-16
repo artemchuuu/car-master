@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace CarMaster;
 
-class Repair // ремонт
+class Repair
 {
-    // ремонт двигуна
     public function engine(Mechanic $mechanic,Car $car, Diagnostics $diagnostics): void
     {
-        echo "VIN code: " . $car->getVinCode() . "\n";
+        echo 'Марка: ' . $car->getBrand()->value . ' Модель: ' . $car->getModel() . ' VIN код: ' . $car->getVinCode() . "\n";
         echo $mechanic->startOfTheRepair();
-        $diagnostics->updateStatus($car, 'Двигун функціонує');
+        $diagnostics->updateCarStatus($car, 'Двигун функціонує');
     }
 }

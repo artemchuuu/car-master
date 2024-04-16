@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace CarMaster;
 
-class Employees // співробітник
+use CarMaster\Exceptions\NameValidationException;
+
+class Employees
 {
-    protected string $name; // ім'я співробітника
-    protected int $age; // вік
-    protected float $salary; // зарплата
+    protected string $name;
+    protected string $surname;
+    protected int $age;
+    protected float $salary;
 
     /**
      * @return void
@@ -23,6 +26,7 @@ class Employees // співробітник
      */
     public function setName(string $name): void
     {
+        $this->validName($name);
         $this->name = $name;
     }
 
@@ -51,9 +55,9 @@ class Employees // співробітник
     }
 
     /**
-     * @param int $salary
+     * @param float $salary
      */
-    public function setSalary(int $salary): void
+    public function setSalary(float $salary): void
     {
         $this->salary = $salary;
     }
@@ -64,5 +68,24 @@ class Employees // співробітник
     public function getSalary(): float
     {
         return $this->salary;
+    }
+
+    public function getSurname(): string
+    {
+        return $this->surname;
+    }
+
+    public function setSurname(string $surname): void
+    {
+        $this->surname = $surname;
+    }
+
+    public function validName(string $name): void
+    {
+        if (strlen($name) < 3) {
+            throw new NameValidationException('Занадто коротке ім\'я.');
+        } elseif (strlen($name) > 32) {
+            throw new NameValidationException('Занадто довге ім\'я.');
+        }
     }
 }

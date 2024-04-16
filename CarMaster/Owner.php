@@ -4,22 +4,12 @@ declare(strict_types=1);
 
 namespace CarMaster;
 
-class Owner extends Client // власник автівки
+class Owner extends Client
 {
-    private string $surname; // прізвище
-    private int $age; // вік
-    private float $balance; // баланс гаманця
-    private array $cars = []; // масив автівок
-
-    function __construct(string $name, string $surname, int $age, int $phone, string $address, float $balance)
-    {
-        $this->name = $name;
-        $this->surname = $surname;
-        $this->age = $age;
-        $this->phone = $phone;
-        $this->address = $address;
-        $this->balance = $balance;
-    }
+    private string $surname;
+    private int $age;
+    private float $balance;
+    private array $cars = [];
 
     /**
      * @param string $surname
@@ -54,9 +44,9 @@ class Owner extends Client // власник автівки
     }
 
     /**
-     * @param int $balance
+     * @param float $balance
      */
-    public function setBalance(int $balance): void
+    public function setBalance(float $balance): void
     {
         $this->balance = $balance;
     }
@@ -68,6 +58,11 @@ class Owner extends Client // власник автівки
     {
         return $this->balance;
     }
+
+    /**
+     * @param Car $car
+     * @return void
+     */
     public function addCar(Car $car): void
     {
         $this->cars[] = $car;
