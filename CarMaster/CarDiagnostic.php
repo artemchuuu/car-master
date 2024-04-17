@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace CarMaster;
 
-class Diagnostics
+class CarDiagnostic
 {
-    private array $carStatuses = [];
+    private array $carStatus = [];
 
     /**
      * @param Car $car
@@ -21,7 +21,7 @@ class Diagnostics
      * @param Car $car
      * @return void
      */
-    public function testingCar(Car $car): void {
+    public function testing(Car $car): void {
         echo '*Тестування* ' . ' Марка: ' . $car->getBrand()->value . ' Model: ' . $car->getModel() . ' VIN код: ' . $car->getVinCode() . ":\n" . "- Тестування електричної системи\n" . "- Тестування гальмування\n";
     }
 
@@ -32,14 +32,14 @@ class Diagnostics
      */
     public function updateCarStatus(Car $car,string $status): void {
         $carKey = $car->getVinCode();
-        $this->carStatuses[$carKey] = $status;
+        $this->carStatus[$carKey] = $status;
     }
 
     /**
      * @return array
      */
-    public function getCarStatuses(): array
+    public function getCarStatus(): array
     {
-        return $this->carStatuses;
+        return $this->carStatus;
     }
 }

@@ -8,7 +8,7 @@ use CarMaster\Exceptions\VinCodeValidationException;
 use CarMaster\Exceptions\NameValidationException;
 use CarMaster\Owner;
 use CarMaster\Car;
-use CarMaster\Diagnostics;
+use CarMaster\CarDiagnostic;
 use CarMaster\OwnerCompany;
 use CarMaster\Mechanic;
 use CarMaster\Repair;
@@ -22,23 +22,23 @@ try {
     $company->setEmail('carmaster@company.com');
     $company->setWebsite('car-master.com');
 
-    $car_1 = new Car();
-    $car_1->setBrand(Brand::Toyota);
-    $car_1->setModel('RAV4');
-    $car_1->setNumber('AA0000AA');
-    $car_1->setMileage(1000);
-    $car_1->setColor('White');
-    $car_1->setVinCode('2334GSD43SER527GA');
-    $car_1->setReleaseDate(new DateTime('2022-03-17'));
+    $car1 = new Car();
+    $car1->setBrand(Brand::Toyota);
+    $car1->setModel('RAV4');
+    $car1->setNumber('AA0000AA');
+    $car1->setMileage(1000);
+    $car1->setColor('White');
+    $car1->setVinCode('2334GSD43SER527GA');
+    $car1->setReleaseDate(new DateTime('2022-03-17'));
 
-    $car_2 = new Car();
-    $car_2->setBrand(Brand::Renault);
-    $car_2->setModel('Duster');
-    $car_2->setNumber('AA7777AA');
-    $car_2->setMileage(1000);
-    $car_2->setColor('Black');
-    $car_2->setVinCode('342FGJAL34FQWPJ32');
-    $car_2->setReleaseDate(new DateTime('2020-03-17'));
+    $car2 = new Car();
+    $car2->setBrand(Brand::Renault);
+    $car2->setModel('Duster');
+    $car2->setNumber('AA7777AA');
+    $car2->setMileage(1000);
+    $car2->setColor('Black');
+    $car2->setVinCode('342FGJAL34FQWPJ32');
+    $car2->setReleaseDate(new DateTime('2020-03-17'));
 
     $owner = new Owner();
     $owner->setName('Mike');
@@ -47,8 +47,8 @@ try {
     $owner->setPhone(983421579);
     $owner->setBalance(2389.49);
     $owner->setAddress('Primorska 1/F');
-    $owner->addCar($car_1);
-    $owner->addCar($car_2);
+    $owner->addCar($car1);
+    $owner->addCar($car2);
 
     $mechanic = new Mechanic();
     $mechanic->setName('John');
@@ -56,17 +56,15 @@ try {
     $mechanic->setAge(32);
     $mechanic->setSalary(999.99);
 
-    $diagnostics = new Diagnostics();
-
-    echo "\n\n================================================\n\n";
+    $carDiagnostic = new CarDiagnostic();
 
     echo 'Назва компанії: ' . $company->getName() . "\n";
     echo 'Адреса: ' . $company->getAddress() . "\n";
     echo 'Телефон: ' . $company->getPhone() . "\n";
     echo 'Ел. пошта: ' . $company->getEmail() . "\n";
-    echo 'Сайт: ' . $company->getWebsite() . "\n\n";
+    echo 'Сайт: ' . $company->getWebsite() . "\n";
 
-    echo "\n\n================================================\n\n";
+    echo "\n\n";
 
     echo 'Ім\'я власника: ' . $owner->getName() . "\n";
     echo 'Прізвище: ' . $owner->getSurname() . "\n";
@@ -80,38 +78,37 @@ try {
         echo $car->getBrand()->value . ' ' . $car->getModel() . ' ' . $car->getVinCode() . "\n";
     }
 
-    echo "\n\n================================================\n\n";
+    echo "\n\n";
 
     echo 'Ім\'я механіка: ' . $mechanic->getName() . "\n";
     echo 'Прізвище: ' . $mechanic->getSurname() . "\n";
     echo 'Вік: ' . $mechanic->getAge() . "\n";
     echo 'Зарплата: ' . $mechanic->getSalary() . "\n";
 
-    echo "\n\n================================================\n\n";
+    echo "\n\n";
 
     foreach ($owner->getCars() as $car) {
-        $diagnostics->visualInspection($car);
-        $diagnostics->testingCar($car);
+        $carDiagnostic->visualInspection($car);
+        $carDiagnostic->testing($car);
     }
 
-    $diagnostics->updateCarStatus($car_1, 'Двигун потребує ремонту');
+    $carDiagnostic->updateCarStatus($car1, 'Двигун потребує ремонту');
 
-    echo "\n\n================================================\n\n";
+    echo "\n\n";
 
-    $carStatuses = $diagnostics->getCarStatuses();
-    var_dump($carStatuses);
+    $carStatus = $carDiagnostic->getCarStatus();
+    var_dump($carStatus);
 
-    echo "\n\n================================================\n\n";
+    echo "\n\n";
 
     echo "\n** Процес ремонту двигуна **\n\n";
     $repair = new Repair();
-    $repair->engine($mechanic, $car_1, $diagnostics);
+    $repair->engine($mechanic, $car1, $carDiagnostic);
 
-    echo "\n\n================================================\n\n";
+    echo "\n\n";
 
-    $carStatuses = $diagnostics->getCarStatuses();
-    var_dump($carStatuses);
-
+    $carStatus = $carDiagnostic->getCarStatus();
+    var_dump($carStatus);
 } catch (VinCodeValidationException $e) {
     echo "Помилка: некорректний VIN: " . $e;
 } catch (NameValidationException $e) {

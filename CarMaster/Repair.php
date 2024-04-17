@@ -6,7 +6,7 @@ namespace CarMaster;
 
 class Repair
 {
-    public function engine(Mechanic $mechanic,Car $car, Diagnostics $diagnostics): void
+    public function engine(Mechanic $mechanic,Car $car, CarDiagnostic $diagnostics): void
     {
         echo 'Марка: ' . $car->getBrand()->value . ' Модель: ' . $car->getModel() . ' VIN код: ' . $car->getVinCode() . "\n";
         echo $mechanic->startOfTheRepair();
