@@ -18,7 +18,7 @@ use Faker\Factory;
 try {
     $company = new OwnerCompany();
     $company->setName('CarMaster');
-    $company->setAddress('Broadway Street 1/1');
+    $company->setAddress(Faker\Factory::create()->address());
     $company->setPhone(963391459);
     $company->setEmail('carmaster@company.com');
     $company->setWebsite('car-master.com');
@@ -51,18 +51,18 @@ try {
     $car3->setReleaseDate(new DateTime('2020-08-01'));
 
     $owner = new Owner();
-    $owner->setName('Mike');
-    $owner->setSurname('Smith');
+    $owner->setName(Faker\Factory::create()->firstName());
+    $owner->setSurname(Faker\Factory::create()->lastName());
     $owner->setAge(23);
     $owner->setPhone(983421579);
     $owner->setBalance(2389.49);
-    $owner->setAddress('Primorska 1/F');
+    $owner->setAddress(Faker\Factory::create()->address());
     $owner->addCar($car1);
     $owner->addCar($car2);
 
     $mechanic = new Mechanic();
-    $mechanic->setName('John');
-    $mechanic->setSurname('Elton');
+    $mechanic->setName(Faker\Factory::create()->firstName());
+    $mechanic->setSurname(Faker\Factory::create()->lastName());
     $mechanic->setAge(32);
     $mechanic->setSalary(999.99);
 
@@ -119,17 +119,6 @@ try {
 
     $carStatus = $carDiagnostic->getCarStatus();
     var_dump($carStatus);
-
-    echo "\n\n";
-
-    $faker = Faker\Factory::create();
-    $faker->name();
-    $faker->email();
-
-    echo "Список відвідувачів автосервісу " . $company->getName() . " за сьогодні:";
-    for ($i = 0; $i < 13; $i++) {
-        echo "\n" . $faker->name() . "\n";
-    }
 } catch (VinCodeValidationException $e) {
     echo "Помилка: некорректний VIN: " . $e;
 } catch (NameValidationException $e) {
