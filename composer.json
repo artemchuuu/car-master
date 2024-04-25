@@ -1,0 +1,20 @@
+{
+  "name": "artemchumachenko/car-master",
+  "description": "-",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Artem Chumachenko",
+      "email": "artem2007chum@outlook.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "CarMaster\\": "CarMaster"
+    }
+  },
+  "require": {
+    "fakerphp/faker": "^1.23"
+  }
+}

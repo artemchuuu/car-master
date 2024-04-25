@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-require_once "autoload.php";
+require_once "vendor/autoload.php";
 
 use CarMaster\Exceptions\VinCodeValidationException;
 use CarMaster\Exceptions\NameValidationException;
@@ -13,6 +13,7 @@ use CarMaster\OwnerCompany;
 use CarMaster\Mechanic;
 use CarMaster\Repair;
 use CarMaster\Brand;
+use Faker\Factory;
 
 try {
     $company = new OwnerCompany();
@@ -39,6 +40,15 @@ try {
     $car2->setColor('Black');
     $car2->setVinCode('342FGJAL34FQWPJ32');
     $car2->setReleaseDate(new DateTime('2020-03-17'));
+
+    $car3 = new Car();
+    $car3->setBrand(Brand::Audi);
+    $car3->setModel('RS7');
+    $car3->setNumber('AA1111AA');
+    $car3->setMileage(1000);
+    $car3->setColor('Black');
+    $car3->setVinCode('41FW35AQ34FQWPJ32');
+    $car3->setReleaseDate(new DateTime('2020-08-01'));
 
     $owner = new Owner();
     $owner->setName('Mike');
@@ -109,6 +119,17 @@ try {
 
     $carStatus = $carDiagnostic->getCarStatus();
     var_dump($carStatus);
+
+    echo "\n\n";
+
+    $faker = Faker\Factory::create();
+    $faker->name();
+    $faker->email();
+
+    echo "Список відвідувачів автосервісу " . $company->getName() . " за сьогодні:";
+    for ($i = 0; $i < 13; $i++) {
+        echo "\n" . $faker->name() . "\n";
+    }
 } catch (VinCodeValidationException $e) {
     echo "Помилка: некорректний VIN: " . $e;
 } catch (NameValidationException $e) {
