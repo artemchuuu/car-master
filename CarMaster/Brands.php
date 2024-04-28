@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace CarMaster;
 
-enum Brand : string
+enum Brands : string
 {
     case BMW = 'BMW';
     case Honda = 'Honda';
