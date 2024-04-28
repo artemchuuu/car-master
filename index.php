@@ -12,7 +12,7 @@ use CarMaster\CarDiagnostic;
 use CarMaster\OwnerCompany;
 use CarMaster\Mechanic;
 use CarMaster\Repair;
-use CarMaster\Brand;
+use CarMaster\Brands;
 use Faker\Factory;
 
 try {
@@ -24,27 +24,27 @@ try {
     $company->setWebsite('car-master.com');
 
     $car1 = new Car();
-    $car1->setBrand(Brand::Toyota);
+    $car1->setBrand(Brands::Toyota);
     $car1->setModel('RAV4');
-    $car1->setNumber('AA0000AA');
+    $car1->setStateNumber('AA0000AA');
     $car1->setMileage(1000);
     $car1->setColor('White');
     $car1->setVinCode('2334GSD43SER527GA');
     $car1->setReleaseDate(new DateTime('2022-03-17'));
 
     $car2 = new Car();
-    $car2->setBrand(Brand::Renault);
+    $car2->setBrand(Brands::Renault);
     $car2->setModel('Duster');
-    $car2->setNumber('AA7777AA');
+    $car2->setStateNumber('AA7777AA');
     $car2->setMileage(1000);
     $car2->setColor('Black');
     $car2->setVinCode('342FGJAL34FQWPJ32');
     $car2->setReleaseDate(new DateTime('2020-03-17'));
 
     $car3 = new Car();
-    $car3->setBrand(Brand::Audi);
+    $car3->setBrand(Brands::Audi);
     $car3->setModel('RS7');
-    $car3->setNumber('AA1111AA');
+    $car3->setStateNumber('AA1111AA');
     $car3->setMileage(1000);
     $car3->setColor('Black');
     $car3->setVinCode('41FW35AQ34FQWPJ32');
@@ -104,12 +104,7 @@ try {
 
     $carDiagnostic->updateCarStatus($car1, 'Двигун потребує ремонту');
 
-    echo "\n\n";
-
-    $carStatus = $carDiagnostic->getCarStatus();
-    var_dump($carStatus);
-
-    echo "\n\n";
+    echo "*Заключення* " . $carDiagnostic->getCarStatus() . "\n\n";
 
     echo "\n** Процес ремонту двигуна **\n\n";
     $repair = new Repair();
@@ -117,8 +112,10 @@ try {
 
     echo "\n\n";
 
-    $carStatus = $carDiagnostic->getCarStatus();
-    var_dump($carStatus);
+    echo $carDiagnostic->getCarStatus();
+
+    echo "\n\n";
+
 } catch (VinCodeValidationException $e) {
     echo "Помилка: некорректний VIN: " . $e;
 } catch (NameValidationException $e) {
