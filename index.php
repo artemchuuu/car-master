@@ -13,7 +13,6 @@ use CarMaster\OwnerCompany;
 use CarMaster\Mechanic;
 use CarMaster\Repair;
 use CarMaster\Brands;
-use Faker\Factory;
 
 try {
     $company = new OwnerCompany();
