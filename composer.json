@@ -14,7 +14,7 @@
       "CarMaster\\": "CarMaster"
     }
   },
-  "require-dev": {
+  "require": {
     "fakerphp/faker": "^1.23"
   }
 }
