@@ -103,7 +103,7 @@ try {
 
     $carDiagnostic->updateCarStatus($car1, 'Двигун потребує ремонту');
 
-    echo "*Заключення* " . $carDiagnostic->getCarStatus() . "\n\n";
+    echo "Заключення: " . $carDiagnostic->getCarStatus() . "\n\n";
 
     echo "\n** Процес ремонту двигуна **\n\n";
     $repair = new Repair();
