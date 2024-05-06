@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace CarMaster;
 
-class Owner extends Client
+class CarOwner extends Client
 {
     private string $surname;
     private int $age;
