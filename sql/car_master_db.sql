@@ -39,7 +39,7 @@ create table servicing
     owner_id int unsigned,
     employee_id int unsigned,
     car_id int unsigned,
-    FOREIGN KEY (owner_id) references cars(id),
+    FOREIGN KEY (owner_id) references carOwners(id),
     FOREIGN KEY (employee_id) references employees(id),
     FOREIGN KEY (car_id)  references cars(id)
 );
