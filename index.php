@@ -6,13 +6,14 @@ require_once "vendor/autoload.php";
 
 use CarMaster\Exceptions\VinCodeValidationException;
 use CarMaster\Exceptions\NameValidationException;
-use CarMaster\Owner;
+use CarMaster\CarOwner;
 use CarMaster\Car;
 use CarMaster\CarDiagnostic;
 use CarMaster\OwnerCompany;
 use CarMaster\Mechanic;
 use CarMaster\Repair;
 use CarMaster\Brands;
+use CarMaster\Servicing;
 
 try {
     $company = new OwnerCompany();
@@ -49,7 +50,7 @@ try {
     $car3->setVinCode('41FW35AQ34FQWPJ32');
     $car3->setReleaseDate(new DateTime('2020-08-01'));
 
-    $owner = new Owner();
+    $owner = new CarOwner();
     $owner->setName(Faker\Factory::create()->firstName());
     $owner->setSurname(Faker\Factory::create()->lastName());
     $owner->setAge(23);
@@ -66,6 +67,12 @@ try {
     $mechanic->setSalary(999.99);
 
     $carDiagnostic = new CarDiagnostic();
+
+    $servicing = new Servicing();
+    $servicing->setCarOwner($owner);
+    $servicing->setCar($car1);
+    $servicing->setEmployees($mechanic);
+    $servicing->setId(3);
 
     echo 'Назва компанії: ' . $company->getName() . "\n";
     echo 'Адреса: ' . $company->getAddress() . "\n";
@@ -108,6 +115,10 @@ try {
     echo "\n** Процес ремонту двигуна **\n\n";
     $repair = new Repair();
     $repair->engine($mechanic, $car1, $carDiagnostic);
+
+    echo "\n\n";
+
+    echo $servicing->getServicingInfo();
 
     echo "\n\n";
 
