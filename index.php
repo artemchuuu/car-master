@@ -2,23 +2,22 @@
 
 declare(strict_types=1);
 
-require_once "vendor/autoload.php";
+require 'vendor/autoload.php';
 
-use CarMaster\Exceptions\VinCodeValidationException;
-use CarMaster\Exceptions\NameValidationException;
-use CarMaster\Owner;
-use CarMaster\Car;
-use CarMaster\CarDiagnostic;
-use CarMaster\OwnerCompany;
-use CarMaster\Mechanic;
-use CarMaster\Repair;
-use CarMaster\Brands;
+use CarMaster\Entity\Car;
+use CarMaster\Entity\CarDiagnostic;
+use CarMaster\Entity\Client;
+use CarMaster\Entity\Enum\Brands;
+use CarMaster\Entity\Exceptions\NameValidationException;
+use CarMaster\Entity\Exceptions\VinCodeValidationException;
+use CarMaster\Entity\Company;
+use CarMaster\Entity\Employee;
 
 try {
-    $company = new OwnerCompany();
+    $company = new Company();
     $company->setName('CarMaster');
     $company->setAddress(Faker\Factory::create()->address());
-    $company->setPhone(963391459);
+    $company->setPhoneNumber(963391459);
     $company->setEmail('carmaster@company.com');
     $company->setWebsite('car-master.com');
 
@@ -49,17 +48,16 @@ try {
     $car3->setVinCode('41FW35AQ34FQWPJ32');
     $car3->setReleaseDate(new DateTime('2020-08-01'));
 
-    $owner = new Owner();
+    $owner = new Client();
     $owner->setName(Faker\Factory::create()->firstName());
     $owner->setSurname(Faker\Factory::create()->lastName());
     $owner->setAge(23);
     $owner->setPhone(983421579);
-    $owner->setBalance(2389.49);
     $owner->setAddress(Faker\Factory::create()->address());
     $owner->addCar($car1);
     $owner->addCar($car2);
 
-    $mechanic = new Mechanic();
+    $mechanic = new Employee();
     $mechanic->setName(Faker\Factory::create()->firstName());
     $mechanic->setSurname(Faker\Factory::create()->lastName());
     $mechanic->setAge(32);
@@ -67,9 +65,11 @@ try {
 
     $carDiagnostic = new CarDiagnostic();
 
+    $company->addEmployee($mechanic);
+
     echo 'Назва компанії: ' . $company->getName() . "\n";
     echo 'Адреса: ' . $company->getAddress() . "\n";
-    echo 'Телефон: ' . $company->getPhone() . "\n";
+    echo 'Телефон: ' . $company->getPhoneNumber() . "\n";
     echo 'Ел. пошта: ' . $company->getEmail() . "\n";
     echo 'Сайт: ' . $company->getWebsite() . "\n";
 
@@ -80,7 +80,6 @@ try {
     echo 'Вік: ' . $owner->getAge() . "\n";
     echo 'Адреса: ' . $owner->getAddress() . "\n";
     echo 'Телефон: ' . $owner->getPhone() . "\n";
-    echo 'Баланс гаманця: ' . $owner->getBalance() . "\n";
     echo 'Автівки власника: ' . "\n";
 
     foreach ($owner->getCars() as $car) {
@@ -93,28 +92,6 @@ try {
     echo 'Прізвище: ' . $mechanic->getSurname() . "\n";
     echo 'Вік: ' . $mechanic->getAge() . "\n";
     echo 'Зарплата: ' . $mechanic->getSalary() . "\n";
-
-    echo "\n\n";
-
-    foreach ($owner->getCars() as $car) {
-        $carDiagnostic->visualInspection($car);
-        $carDiagnostic->testing($car);
-    }
-
-    $carDiagnostic->updateCarStatus($car1, 'Двигун потребує ремонту');
-
-    echo "Заключення: " . $carDiagnostic->getCarStatus() . "\n\n";
-
-    echo "\n** Процес ремонту двигуна **\n\n";
-    $repair = new Repair();
-    $repair->engine($mechanic, $car1, $carDiagnostic);
-
-    echo "\n\n";
-
-    echo $carDiagnostic->getCarStatus();
-
-    echo "\n\n";
-
 } catch (VinCodeValidationException $e) {
     echo "Помилка: некорректний VIN: " . $e;
 } catch (NameValidationException $e) {

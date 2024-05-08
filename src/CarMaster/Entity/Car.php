@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace CarMaster;
+namespace CarMaster\Entity;
 
-use CarMaster\Exceptions\VinCodeValidationException;
+use CarMaster\Entity\Enum\Brands;
+use CarMaster\Entity\Exceptions\VinCodeValidationException;
 use DateTime;
 
 class Car
@@ -12,12 +13,20 @@ class Car
     const WIN_CODE_LENGTH = 17;
 
     private string $model;
+
     private string $stateNumber;
+
     private int $mileage;
+
     private string $color;
+
     private DateTime $releaseDate;
+
     private string $vinCode;
+
     private Brands $brand;
+
+    private array $components;
 
     public function setModel(string $model): void
     {

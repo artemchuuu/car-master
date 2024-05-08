@@ -1,16 +1,5 @@
 USE car_master_db;
 
-
-# В нас є таблиця carOwners в якій зберігаються наші власники автівок або клієнти
-# Далі, в таблиці cars зберігаються автівки. Авто може мати одного клієнта, а наш клієнт
-# (або власник авто) може мати декілька машин
-
-# В таблиці employees зберігаються наші співробітники.
-
-
-# А в таблиці servicing зберігаються одразу айдішники власника авто, робітника і айді авто.
-# Співробітники можуть обслуговувати декілька машин
-
 create table carOwners
 (
     id int unsigned auto_increment primary key,
@@ -31,7 +20,8 @@ create table cars
     mileage int,
     vinCode char(17),
     releaseDate date,
-    owner_id int unsigned
+    owner_id int unsigned,
+    FOREIGN KEY (owner_id) references carOwners(id)
 );
 
 create table employees
@@ -48,17 +38,8 @@ create table servicing
     id int unsigned auto_increment primary key,
     owner_id int unsigned,
     employee_id int unsigned,
-    car_id int unsigned
+    car_id int unsigned,
+    FOREIGN KEY (owner_id) references carOwners(id),
+    FOREIGN KEY (employee_id) references employees(id),
+    FOREIGN KEY (car_id)  references cars(id)
 );
-
-alter table cars add
-    FOREIGN KEY (owner_id) references carOwners(id);
-
-alter table servicing add
-    FOREIGN KEY (owner_id) references carOwners(id);
-
-alter table servicing add
-    FOREIGN KEY (employee_id) references employees(id);
-
-alter table servicing add
-    FOREIGN KEY (car_id)  references cars(id);

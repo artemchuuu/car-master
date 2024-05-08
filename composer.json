@@ -11,7 +11,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "CarMaster\\": "CarMaster"
+      "CarMaster\\": "src/CarMaster"
     }
   },
   "require": {

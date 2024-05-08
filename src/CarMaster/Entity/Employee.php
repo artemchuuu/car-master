@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace CarMaster;
+namespace CarMaster\Entity;
 
-use CarMaster\Exceptions\NameValidationException;
+use CarMaster\Entity\Exceptions\NameValidationException;
 
-class Employees
+class Employee
 {
-    protected string $name;
-    protected string $surname;
-    protected int $age;
-    protected float $salary;
+    private string $name;
 
-    public function startOfTheRepair(): void
-    {
-        echo "*Починається робота*\n";
-    }
+    private string $surname;
+
+    private int $age;
+
+    private float $salary;
+
+    private string $specialization;
 
     public function setName(string $name): void
     {
@@ -57,6 +57,16 @@ class Employees
     public function setSurname(string $surname): void
     {
         $this->surname = $surname;
+    }
+
+    public function getSpecialization(): string
+    {
+        return $this->specialization;
+    }
+
+    public function setSpecialization(string $specialization): void
+    {
+        $this->specialization = $specialization;
     }
 
     public function validName(string $name): void
