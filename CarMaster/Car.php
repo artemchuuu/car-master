@@ -19,6 +19,8 @@ class Car
     private string $vinCode;
     private Brands $brand;
 
+    private int $id;
+
     public function setModel(string $model): void
     {
         $this->model = $model;
@@ -95,5 +97,15 @@ class Car
         if (strlen($vinCode) !== self::WIN_CODE_LENGTH) {
             throw new VinCodeValidationException('VIN код повинен складатися з 17 символів.');
         }
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
     }
 }
