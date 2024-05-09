@@ -16,17 +16,17 @@ readonly class CarRepository
     public function add(Car $car): void
     {
         $statement = $this->pdo->prepare(
-            "INSERT INTO cars (brand, model, color, stateNumber, mileage, vinCode, releaseDate, owner_id) 
+            "INSERT INTO cars (brand, model, color, stateNumber, mileage, vinCode, releaseDate) 
                     VALUES (:brand, :model, :color, :stateNumber, :mileage, :vinCode, :releaseDate)
         ");
         $statement->execute([
-            ':brand' => $car->getBrand(),
+            ':brand' => $car->getBrand()->value,
             ':model' => $car->getModel(),
             ':color' => $car->getColor(),
             ':stateNumber' => $car->getStateNumber(),
             ':mileage' => $car->getMileage(),
             ':vinCode' => $car->getVinCode(),
-            ':releaseDate' => $car->getReleaseDate(),
+            ':releaseDate' => $car->getReleaseDate()->format('Y-m-d'),
         ]);
         $car->setId((int) $this->pdo->lastInsertId());
     }

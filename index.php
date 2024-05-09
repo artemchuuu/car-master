@@ -25,7 +25,6 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $car3 = new Car();
-    $car3->setId(1);
     $car3->setBrand(Brands::Audi);
     $car3->setModel('RS7');
     $car3->setStateNumber('AA1111AA');
@@ -35,7 +34,6 @@ try {
     $car3->setReleaseDate(new DateTime('2020-08-01'));
 
     $carRepository = new CarRepository($pdo);
-    $carRepository->getInfo('1GCHK24K79E193794');
     $carRepository->add($car3);
 
 } catch (PDOException $e) {
