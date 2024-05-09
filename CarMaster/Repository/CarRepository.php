@@ -33,8 +33,8 @@ readonly class CarRepository
 
     public function delete(Car $car): void
     {
-        $statement = $this->pdo->prepare("DELETE FROM cars WHERE id = :id");
-        $statement->execute(['vinCode' => $car->getId()]);
+        $statement = $this->pdo->prepare("DELETE FROM cars WHERE vinCode = :vinCode");
+        $statement->execute(['vinCode' => $car->getVinCode()]);
     }
 
     public function getInfo(string $vinCode): void

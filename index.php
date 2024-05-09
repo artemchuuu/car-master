@@ -35,6 +35,7 @@ try {
 
     $carRepository = new CarRepository($pdo);
     $carRepository->add($car3);
+//    $carRepository->delete($car3);
 
 } catch (PDOException $e) {
     echo "Database connection error: " . $e->getMessage();
