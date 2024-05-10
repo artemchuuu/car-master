@@ -9,7 +9,7 @@ use PDO;
 
 readonly class CarRepository
 {
-    public function __construct(private readonly PDO $pdo)
+    public function __construct(private PDO $pdo)
     {
     }
 
@@ -40,11 +40,10 @@ readonly class CarRepository
     public function getInfo(string $vinCode): void
     {
         $statement = $this->pdo->prepare(
-            "SELECT cars.*, carOwners.name, carOwners.surname
-                    FROM cars
-                    JOIN carOwners ON cars.owner_id = carOwners.id
-                    WHERE cars.vinCode = :vinCode
-                    GROUP BY cars.id, carOwners.name, carOwners.surname;"
+            "select cars.id, cars.brand, cars.model, cars.color, cars.stateNumber, cars.mileage, cars.vinCode, cars.releaseDate, carOwners.name, carOwners.surname
+from cars
+         join carOwners on cars.owner_id = carOwners.id
+where cars.vinCode = :vinCode;"
         );
         $statement->execute(['vinCode' => $vinCode]);
     }

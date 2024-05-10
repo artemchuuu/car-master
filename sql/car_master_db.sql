@@ -48,16 +48,15 @@ create table servicing
 );
 
 create table CarOwners_Cars (
-    owner_id int unsigned,
-    car_id int unsigned,
-    primary key (owner_id, car_id),
-    foreign key (owner_id) references carOwners(id),
-    foreign key (car_id) references cars(id)
+                                owner_id int unsigned,
+                                car_id int unsigned,
+                                primary key (owner_id, car_id),
+                                foreign key (owner_id) references carOwners(id),
+                                foreign key (car_id) references cars(id)
 );
 
 explain
-select cars.*, carOwners.name, carOwners.surname
+select cars.id, cars.brand, cars.model, cars.color, cars.stateNumber, cars.mileage, cars.vinCode, cars.releaseDate, carOwners.name, carOwners.surname
 from cars
-join carOwners on cars.owner_id = carOwners.id
-where cars.vinCode = '2GKALMEK9FJ202605'
-group by cars.id, carOwners.name, carOwners.surname;
+         join carOwners on cars.owner_id = carOwners.id
+where cars.vinCode = '2GKALMEK9FJ202605';
