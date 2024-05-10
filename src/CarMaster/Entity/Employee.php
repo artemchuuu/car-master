@@ -6,7 +6,7 @@ namespace CarMaster\Entity;
 
 use CarMaster\Entity\Exceptions\NameValidationException;
 
-class Client
+class Employee
 {
     private string $name;
 
@@ -14,19 +14,18 @@ class Client
 
     private int $age;
 
-    private array $cars;
+    private float $salary;
 
-    private int $phoneNumber;
-
-    public function setName(string $name): void
-    {
-        $this->validName($name);
-        $this->name = $name;
-    }
+    private string $specialization;
 
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
     }
 
     public function getSurname(): string
@@ -49,24 +48,24 @@ class Client
         $this->age = $age;
     }
 
-    public function getCars(): array
+    public function getSalary(): float
     {
-        return $this->cars;
+        return $this->salary;
     }
 
-    public function setCars(Car $car): void
+    public function setSalary(float $salary): void
     {
-        $this->cars[] = $car;
+        $this->salary = $salary;
     }
 
-    public function getPhoneNumber(): int
+    public function getSpecialization(): string
     {
-        return $this->phoneNumber;
+        return $this->specialization;
     }
 
-    public function setPhoneNumber(int $phone): void
+    public function setSpecialization(string $specialization): void
     {
-        $this->phoneNumber = $phone;
+        $this->specialization = $specialization;
     }
 
     public function validName(string $name): void
