@@ -26,6 +26,8 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
     volumes:
       - db:/var/lib/mysql
+    env_file:
+      - .env
 
 volumes:
   db:

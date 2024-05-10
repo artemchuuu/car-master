@@ -1,4 +1,4 @@
-USE car_master_db;
+use db;
 
 create table carOwners
 (
@@ -7,7 +7,8 @@ create table carOwners
     surname varchar(32),
     email varchar(100),
     age int,
-    phoneNumber varchar(20)
+    phoneNumber varchar(20),
+    index (id)
 );
 
 create table cars
@@ -21,7 +22,9 @@ create table cars
     vinCode char(17),
     releaseDate date,
     owner_id int unsigned,
-    FOREIGN KEY (owner_id) references carOwners(id)
+    FOREIGN KEY (owner_id) references carOwners(id),
+    index (owner_id),
+    index (vinCode)
 );
 
 create table employees
@@ -43,3 +46,17 @@ create table servicing
     FOREIGN KEY (employee_id) references employees(id),
     FOREIGN KEY (car_id)  references cars(id)
 );
+
+create table CarOwners_Cars (
+                                owner_id int unsigned,
+                                car_id int unsigned,
+                                primary key (owner_id, car_id),
+                                foreign key (owner_id) references carOwners(id),
+                                foreign key (car_id) references cars(id)
+);
+
+explain
+select cars.id, cars.brand, cars.model, cars.color, cars.stateNumber, cars.mileage, cars.vinCode, cars.releaseDate, carOwners.name, carOwners.surname
+from cars
+         join carOwners on cars.owner_id = carOwners.id
+where cars.vinCode = '2GKALMEK9FJ202605';
