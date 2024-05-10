@@ -13,16 +13,12 @@ use CarMaster\OwnerCompany;
 use CarMaster\Mechanic;
 use CarMaster\Repair;
 use CarMaster\Brands;
+use CarMaster\ServiceFactory;
 use CarMaster\Servicing;
 use CarMaster\Repository\CarRepository;
 
-$dsn = sprintf('mysql:host=%s;dbname=%s', getenv('DB_HOST'), getenv('DB_NAME'));
-$username = getenv('DB_USER');
-$password = getenv('DB_PASSWORD');
-
 try {
-    $pdo = new PDO($dsn, $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $serviceFactory = new ServiceFactory();
 
     $car3 = new Car();
     $car3->setBrand(Brands::Audi);
@@ -33,7 +29,7 @@ try {
     $car3->setVinCode('1GCHK24K79E193794');
     $car3->setReleaseDate(new DateTime('2020-08-01'));
 
-    $carRepository = new CarRepository($pdo);
+    $carRepository = new CarRepository($serviceFactory->create());
     $carRepository->add($car3);
 //    $carRepository->delete($car3);
 
