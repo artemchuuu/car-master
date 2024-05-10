@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CarMaster;
+namespace CarMaster\Entity;
 
 class Mechanic extends Employees
 {

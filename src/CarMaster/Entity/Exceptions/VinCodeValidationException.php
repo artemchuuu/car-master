@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace CarMaster\Exceptions;
+namespace CarMaster\Entity\Exceptions;
 
 use RuntimeException;
 

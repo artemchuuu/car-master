@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace CarMaster;
+namespace CarMaster\Entity;
 
-use CarMaster\Exceptions\NameValidationException;
+use CarMaster\Entity\Exceptions\NameValidationException;
 
 class Employees
 {

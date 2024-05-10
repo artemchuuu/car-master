@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-require_once "vendor/autoload.php";
+require __DIR__ . '/../vendor/autoload.php';
 
-use CarMaster\Exceptions\VinCodeValidationException;
-use CarMaster\Exceptions\NameValidationException;
-use CarMaster\CarOwner;
-use CarMaster\Car;
-use CarMaster\CarDiagnostic;
-use CarMaster\OwnerCompany;
-use CarMaster\Mechanic;
-use CarMaster\Repair;
-use CarMaster\Brands;
-use CarMaster\ServiceFactory;
-use CarMaster\Servicing;
+use CarMaster\Entity\Brands;
+use CarMaster\Entity\Car;
+use CarMaster\Entity\CarDiagnostic;
+use CarMaster\Entity\CarOwner;
+use CarMaster\Entity\Exceptions\NameValidationException;
+use CarMaster\Entity\Exceptions\VinCodeValidationException;
+use CarMaster\Entity\Mechanic;
+use CarMaster\Entity\OwnerCompany;
+use CarMaster\Entity\Repair;
+use CarMaster\Entity\ServiceFactory;
+use CarMaster\Entity\Servicing;
 use CarMaster\Repository\CarRepository;
 
 try {

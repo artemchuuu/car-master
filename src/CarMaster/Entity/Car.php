@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace CarMaster;
+namespace CarMaster\Entity;
 
-use CarMaster\Exceptions\VinCodeValidationException;
+use CarMaster\Entity\Exceptions\VinCodeValidationException;
 use DateTime;
 
 class Car

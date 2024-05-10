@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace CarMaster\Repository;
 
-use CarMaster\Car;
+use CarMaster\Entity\Car;
 use PDO;
 
 readonly class CarRepository
