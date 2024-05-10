@@ -13,9 +13,9 @@ use CarMaster\Entity\Exceptions\VinCodeValidationException;
 use CarMaster\Entity\Mechanic;
 use CarMaster\Entity\OwnerCompany;
 use CarMaster\Entity\Repair;
-use CarMaster\Entity\ServiceFactory;
 use CarMaster\Entity\Servicing;
 use CarMaster\Repository\CarRepository;
+use CarMaster\ServiceFactory;
 
 try {
     $serviceFactory = new ServiceFactory();
