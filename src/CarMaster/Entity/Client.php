@@ -5,18 +5,47 @@ declare(strict_types=1);
 namespace CarMaster\Entity;
 
 use CarMaster\Entity\Exceptions\NameValidationException;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\Table;
 
+#[Entity]
+#[Table(name: 'client')]
 class Client
 {
+    #[Id]
+    #[GeneratedValue]
+    #[Column(type: Types::INTEGER)]
+    private int $id;
+
+    #[Column(type: Types::STRING, length: 32)]
     private string $name;
 
+    #[Column(type: Types::STRING, length: 32)]
     private string $surname;
 
+    #[Column(type: Types::INTEGER)]
     private int $age;
 
-    private array $cars;
+    #[OneToMany(targetEntity: Vehicle::class, mappedBy: 'client')]
+    private array $vehicles;
 
+    #[Column(type: Types::INTEGER)]
     private int $phoneNumber;
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
 
     public function setName(string $name): void
     {
@@ -49,14 +78,14 @@ class Client
         $this->age = $age;
     }
 
-    public function getCars(): array
+    public function getVehicles(): array
     {
-        return $this->cars;
+        return $this->vehicles;
     }
 
-    public function setCars(Car $car): void
+    public function setVehicles(array $vehicles): void
     {
-        $this->cars[] = $car;
+        $this->vehicles = $vehicles;
     }
 
     public function getPhoneNumber(): int
@@ -67,6 +96,22 @@ class Client
     public function setPhoneNumber(int $phone): void
     {
         $this->phoneNumber = $phone;
+    }
+
+    public function getFullName(): string
+    {
+        return $this->name . ' ' . $this->surname;
+    }
+
+    public function getFullInfo(): array
+    {
+        return [
+            'name' => $this->name,
+            'surname' => $this->surname,
+            'age' => $this->age,
+            'cars' => $this->vehicles,
+            'phoneNumber' => $this->phoneNumber,
+        ];
     }
 
     public function validName(string $name): void

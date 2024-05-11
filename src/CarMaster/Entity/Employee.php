@@ -5,18 +5,52 @@ declare(strict_types=1);
 namespace CarMaster\Entity;
 
 use CarMaster\Entity\Exceptions\NameValidationException;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\Table;
 
+#[Entity]
+#[Table(name: 'employee')]
 class Employee
 {
+    #[Id]
+    #[GeneratedValue]
+    #[Column(type: Types::INTEGER)]
+    private int $id;
+
+    #[Column(type: Types::STRING, length: 32)]
     private string $name;
 
+    #[Column(type: Types::STRING, length: 32)]
     private string $surname;
 
+    #[Column(type: Types::INTEGER)]
     private int $age;
 
+    #[Column(type: Types::INTEGER)]
     private float $salary;
 
+    #[Column(type: Types::STRING, length: 124)]
     private string $specialization;
+
+    #[ManyToMany(targetEntity: Company::class, inversedBy: 'employees')]
+    #[JoinTable(name: 'company_employees')]
+    private Company $company;
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
 
     public function getName(): string
     {
@@ -66,6 +100,33 @@ class Employee
     public function setSpecialization(string $specialization): void
     {
         $this->specialization = $specialization;
+    }
+
+    public function getCompany(): Company
+    {
+        return $this->company;
+    }
+
+    public function setCompany(Company $company): void
+    {
+        $this->company = $company;
+    }
+
+    public function getFullName(): string
+    {
+        return $this->name . ' ' . $this->surname;
+    }
+
+    public function getFullInfo(): array
+    {
+        return [
+            'name' => $this->name,
+            'surname' => $this->surname,
+            'age' => $this->age,
+            'salary' => $this->salary,
+            'specialization' => $this->specialization,
+            'company' => $this->company
+        ];
     }
 
     public function validName(string $name): void

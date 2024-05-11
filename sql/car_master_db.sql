@@ -1,62 +1,68 @@
-use db;
+# create database car_master_db;
 
-create table carOwners
+use car_master_db;
+
+create table client
 (
     id int unsigned auto_increment primary key,
-    name varchar(32),
-    surname varchar(32),
-    email varchar(100),
-    age int,
-    phoneNumber varchar(20),
-    index (id)
+    name varchar(32) not null,
+    surname varchar(32) not null,
+    age int not null,
+    phone_number int not null
 );
 
-create table cars
+create table company
 (
     id int unsigned auto_increment primary key,
-    brand varchar(32),
-    model varchar(32),
-    color varchar(32),
-    stateNumber varchar(32),
-    mileage int,
-    vinCode char(17),
-    releaseDate date,
-    owner_id int unsigned,
-    FOREIGN KEY (owner_id) references carOwners(id),
-    index (owner_id),
-    index (vinCode)
+    name varchar(255) not null,
+    email varchar(255) not null,
+    website varchar(255) not null,
+    about text not null
 );
 
-create table employees
+create table employee
 (
     id int unsigned auto_increment primary key,
-    name varchar(32),
-    surname varchar(32),
-    age int,
-    salary float
+    name varchar(32) not null,
+    surname varchar(32) not null,
+    age int not null,
+    salary float not null,
+    specialization varchar(124) not null,
+    company_id int unsigned
 );
 
-create table servicing
+create table vehicle
 (
     id int unsigned auto_increment primary key,
-    owner_id int unsigned,
-    employee_id int unsigned,
-    car_id int unsigned,
-    FOREIGN KEY (owner_id) references carOwners(id),
-    FOREIGN KEY (employee_id) references employees(id),
-    FOREIGN KEY (car_id)  references cars(id)
+    brand varchar(150) not null,
+    model varchar(150) not null,
+    color varchar(150) not null,
+    release_date date not null,
+    state_number varchar(25) not null,
+    mileage int not null,
+    vin_code varchar(17) not null,
+    client_id int unsigned
 );
 
-create table CarOwners_Cars (
-                                owner_id int unsigned,
-                                car_id int unsigned,
-                                primary key (owner_id, car_id),
-                                foreign key (owner_id) references carOwners(id),
-                                foreign key (car_id) references cars(id)
+create table car_part
+(
+    id int unsigned auto_increment primary key,
+    name varchar(255) not null,
+    number int not null,
+    price float not null,
+    description text not null,
+    part_condition varchar(150) not null,
+    added_date date not null,
+    manufacturer varchar(150)
 );
 
-explain
-select cars.id, cars.brand, cars.model, cars.color, cars.stateNumber, cars.mileage, cars.vinCode, cars.releaseDate, carOwners.name, carOwners.surname
-from cars
-         join carOwners on cars.owner_id = carOwners.id
-where cars.vinCode = '2GKALMEK9FJ202605';
+create table company_employees
+(
+    company_id int unsigned,
+    employee_id int unsigned
+);
+
+alter table employee add foreign key (company_id) references company(id);
+alter table vehicle add foreign key (client_id) references  client(id);
+alter table company_employees add foreign key (company_id) references company(id);
+alter table company_employees add foreign key (employee_id) references employee(id);
