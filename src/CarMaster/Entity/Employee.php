@@ -10,12 +10,13 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\Table;
 
 #[Entity]
-#[Table(name: 'client')]
-class Client
+#[Table(name: 'employee')]
+class Employee
 {
     #[Id]
     #[GeneratedValue]
@@ -31,11 +32,15 @@ class Client
     #[Column(type: Types::INTEGER)]
     private int $age;
 
-    #[OneToMany(targetEntity: Vehicle::class, mappedBy: 'client')]
-    private array $vehicles;
-
     #[Column(type: Types::INTEGER)]
-    private int $phoneNumber;
+    private float $salary;
+
+    #[Column(type: Types::STRING, length: 124)]
+    private string $specialization;
+
+    #[ManyToMany(targetEntity: Company::class, inversedBy: 'employees')]
+    #[JoinTable(name: 'company_employees')]
+    private Company $company;
 
     public function getId(): int
     {
@@ -47,15 +52,14 @@ class Client
         $this->id = $id;
     }
 
-    public function setName(string $name): void
-    {
-        $this->validName($name);
-        $this->name = $name;
-    }
-
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
     }
 
     public function getSurname(): string
@@ -78,24 +82,34 @@ class Client
         $this->age = $age;
     }
 
-    public function getVehicles(): array
+    public function getSalary(): float
     {
-        return $this->vehicles;
+        return $this->salary;
     }
 
-    public function setVehicles(Vehicle $vehicles): void
+    public function setSalary(float $salary): void
     {
-        $this->vehicles[] = $vehicles;
+        $this->salary = $salary;
     }
 
-    public function getPhoneNumber(): int
+    public function getSpecialization(): string
     {
-        return $this->phoneNumber;
+        return $this->specialization;
     }
 
-    public function setPhoneNumber(int $phone): void
+    public function setSpecialization(string $specialization): void
     {
-        $this->phoneNumber = $phone;
+        $this->specialization = $specialization;
+    }
+
+    public function getCompany(): Company
+    {
+        return $this->company;
+    }
+
+    public function setCompany(Company $company): void
+    {
+        $this->company = $company;
     }
 
     public function getFullName(): string
@@ -109,8 +123,9 @@ class Client
             'name' => $this->name,
             'surname' => $this->surname,
             'age' => $this->age,
-            'cars' => $this->vehicles,
-            'phoneNumber' => $this->phoneNumber,
+            'salary' => $this->salary,
+            'specialization' => $this->specialization,
+            'company' => $this->company
         ];
     }
 

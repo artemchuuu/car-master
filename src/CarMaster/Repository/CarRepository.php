@@ -28,7 +28,6 @@ readonly class CarRepository
             ':vinCode' => $car->getVinCode(),
             ':releaseDate' => $car->getReleaseDate()->format('Y-m-d'),
         ]);
-        $car->setId((int) $this->pdo->lastInsertId());
     }
 
     public function delete(Car $car): void

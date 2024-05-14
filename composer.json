@@ -1,6 +1,7 @@
 {
   "name": "artemchumachenko/car-master",
   "description": "-",
+  "version": "0.0.1",
   "minimum-stability": "stable",
   "license": "MIT",
   "authors": [
@@ -16,6 +17,10 @@
   },
   "require": {
     "fakerphp/faker": "^1.23",
-    "ext-pdo": "*"
+    "ext-pdo": "*",
+    "doctrine/orm": "^3.1",
+    "doctrine/dbal": "^4.0",
+    "symfony/cache": "^7.0",
+    "symfony/console": "^7.0"
   }
 }

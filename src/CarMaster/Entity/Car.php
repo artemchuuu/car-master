@@ -4,108 +4,32 @@ declare(strict_types=1);
 
 namespace CarMaster\Entity;
 
-use CarMaster\Entity\Exceptions\VinCodeValidationException;
-use DateTime;
+use CarMaster\Entity\Enum\BodyType;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
 
-class Car
+#[Entity]
+class Car extends Vehicle
 {
-    const WIN_CODE_LENGTH = 17;
+    #[Column(type: Types::STRING, length: 55)]
+    private BodyType $bodyType;
 
-    private string $model;
-    private string $stateNumber;
-    private int $mileage;
-    private string $color;
-    private DateTime $releaseDate;
-    private string $vinCode;
-    private Brands $brand;
-
-    private int $id;
-
-    public function setModel(string $model): void
+    public function getBodyType(): BodyType
     {
-        $this->model = $model;
+        return $this->bodyType;
     }
 
-    public function getModel(): string
+    public function setBodyType(BodyType $bodyType): void
     {
-        return $this->model;
+        $this->bodyType = $bodyType;
     }
 
-    public function setStateNumber(string $stateNumber): void
+    public function getFullName(): array
     {
-        $this->stateNumber = $stateNumber;
-    }
+        $fullInfo = parent::getFullInfo();
+        $fullInfo['BodyType'] = $this->getBodyType()->value;
 
-    public function getStateNumber(): string
-    {
-        return $this->stateNumber;
-    }
-
-    public function setMileage(int $mileage): void
-    {
-        $this->mileage = $mileage;
-    }
-
-    public function getMileage(): int
-    {
-        return $this->mileage;
-    }
-
-    public function setColor(string $color): void
-    {
-        $this->color = $color;
-    }
-
-    public function getColor(): string
-    {
-        return $this->color;
-    }
-
-    public function getReleaseDate(): DateTime
-    {
-        return $this->releaseDate;
-    }
-
-    public function setReleaseDate(DateTime $releaseDate): void
-    {
-        $this->releaseDate = $releaseDate;
-    }
-
-    public function setVinCode(string $vinCode): void
-    {
-        $this->validVinCode($vinCode);
-        $this->vinCode = $vinCode;
-    }
-
-    public function getVinCode(): string
-    {
-        return $this->vinCode;
-    }
-
-    public function getBrand(): Brands
-    {
-        return $this->brand;
-    }
-
-    public function setBrand(Brands $brand): void
-    {
-        $this->brand = $brand;
-    }
-
-    public function validVinCode(string $vinCode): void
-    {
-        if (strlen($vinCode) !== self::WIN_CODE_LENGTH) {
-            throw new VinCodeValidationException('VIN код повинен складатися з 17 символів.');
-        }
-    }
-
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    public function setId(int $id): void
-    {
-        $this->id = $id;
+        return $fullInfo;
     }
 }
