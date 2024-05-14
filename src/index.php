@@ -52,7 +52,7 @@ try {
     $client->setName('Mark');
     $client->setSurname('Smith');
     $client->setAge(25);
-    $client->setCars($car);
+    $client->setVehicles($car);
     $client->setPhoneNumber(380965643);
 
     $carPart = new CarPart();

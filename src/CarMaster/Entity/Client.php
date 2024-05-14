@@ -83,9 +83,9 @@ class Client
         return $this->vehicles;
     }
 
-    public function setVehicles(array $vehicles): void
+    public function setVehicles(Vehicle $vehicles): void
     {
-        $this->vehicles = $vehicles;
+        $this->vehicles[] = $vehicles;
     }
 
     public function getPhoneNumber(): int
