@@ -126,10 +126,8 @@ class Employee
         return [
             'name' => $this->name,
             'surname' => $this->surname,
-            'age' => $this->age,
             'salary' => $this->salary,
             'specialization' => $this->specialization,
-            'company' => $this->company
         ];
     }
 

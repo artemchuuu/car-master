@@ -13,17 +13,17 @@ class TopEmployees
     {
         $services = new ServiceFactory();
         $entityManager = $services->createORMEntityManager();
-
         $queryBuilder = $entityManager->getRepository(Employee::class)
-        ->createQueryBuilder('e');
+            ->createQueryBuilder('e');
 
-        $queryBuilder->select('company_id')
-            ->where('company_id, 3');
+        $queryBuilder
+            ->select('e.id, e.name, e.surname, e.age, e.salary')
+            ->orderBy('e.age', 'DESC');
 
-        $queryBuilder->orderBy('e.salary', 'DESC');
+        $result = $queryBuilder->getQuery()->getResult();
 
-        $result = $queryBuilder->getQuery()->getSQL();
-
-        var_dump($result);
+        foreach ($result as $employee) {
+            echo $employee['name'] . " " . $employee['surname'] . " " . $employee['age'] . " ";
+        }
     }
 }

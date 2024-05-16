@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
+use CarMaster\Database\ExportData;
 use CarMaster\Database\TopEmployees;
 use Faker\Factory as FakerFactory;
 use CarMaster\Entity\Car;
@@ -42,10 +43,13 @@ try {
     $employee->setAge($faker->numberBetween($min = 18, $max = 59));
 
     $entityManager->persist($employee);
-    $entityManager->flush();
+//    $entityManager->flush();
 
-    $topEmployees = new TopEmployees();
-    $topEmployees->execute();
+//    $topEmployees = new TopEmployees();
+//    $topEmployees->execute();
+
+    $exportData = new ExportData();
+    $exportData->exportEmployees();
 
 } catch (PDOException $e) {
     echo "Database connection error: " . $e->getMessage();
