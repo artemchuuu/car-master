@@ -128,6 +128,7 @@ class Employee
             'surname' => $this->surname,
             'salary' => $this->salary,
             'specialization' => $this->specialization,
+            'company_id' => $this->company->getId()
         ];
     }
 
