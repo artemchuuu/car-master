@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace CarMaster\Entity;
 
 use CarMaster\Entity\Exceptions\NameValidationException;
+use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
