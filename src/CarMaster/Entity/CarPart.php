@@ -13,34 +13,22 @@ use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Table;
 
-#[Entity]
-#[Table(name: "car_part")]
 class CarPart
 {
-    #[Id]
-    #[GeneratedValue]
-    #[Column(type: Types::INTEGER)]
     private int $id;
 
-    #[Column(type: Types::STRING, length: 255)]
     private string $name;
 
-    #[Column(type: Types::INTEGER)]
     private int $number;
 
-    #[Column(type: Types::INTEGER)]
     private float $price;
 
-    #[Column(type: Types::STRING)]
     private string $description;
 
-    #[Column(type: Types::STRING, length: 150)]
     private ConditionStatus $condition;
 
-    #[Column(type: Types::DATE_MUTABLE)]
     private DateTime $addedDate;
 
-    #[Column(type: Types::STRING, length: 150)]
     private string $manufacturer;
 
     public function getId(): int

@@ -10,8 +10,11 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\Table;
 
 #[Entity]
@@ -23,23 +26,23 @@ class Employee
     #[Column(type: Types::INTEGER)]
     private int $id;
 
-    #[Column(type: Types::STRING, length: 32)]
+    #[Column(type: Types::STRING)]
     private string $name;
 
-    #[Column(type: Types::STRING, length: 32)]
+    #[Column(type: Types::STRING)]
     private string $surname;
 
     #[Column(type: Types::INTEGER)]
     private int $age;
 
-    #[Column(type: Types::INTEGER)]
+    #[Column(type: Types::FLOAT)]
     private float $salary;
 
-    #[Column(type: Types::STRING, length: 124)]
+    #[Column(type: Types::STRING)]
     private string $specialization;
 
-    #[ManyToMany(targetEntity: Company::class, inversedBy: 'employees')]
-    #[JoinTable(name: 'company_employees')]
+    #[ManyToOne(targetEntity: Company::class, inversedBy: 'employees')]
+    #[JoinColumn(name: 'company_id', referencedColumnName: 'id')]
     private Company $company;
 
     public function getId(): int

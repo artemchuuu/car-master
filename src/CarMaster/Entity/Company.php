@@ -4,16 +4,19 @@ declare(strict_types=1);
 
 namespace CarMaster\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\Table;
 
 #[Entity]
-#[Table(name: "company")]
+#[Table(name: 'company')]
 class Company
 {
     #[Id]
@@ -21,20 +24,25 @@ class Company
     #[Column(type: Types::INTEGER)]
     private int $id;
 
-    #[Column(type: Types::STRING, length: 255)]
+    #[Column(type: Types::STRING)]
     private string $name;
 
-    #[Column(type: Types::STRING, length: 255)]
+    #[Column(type: Types::STRING)]
     private string $email;
 
-    #[Column(type: Types::STRING, length: 255)]
+    #[Column(type: Types::STRING)]
     private string $website;
 
-    #[Column(type: Types::TEXT)]
+    #[Column(type: Types::STRING)]
     private string $about;
 
-    #[ManyToMany(targetEntity: Employee::class, mappedBy: 'companies')]
-    private array $employees;
+    #[OneToMany(targetEntity: Employee::class, mappedBy: 'company')]
+    private Collection $employees;
+
+    public function __construct()
+    {
+        $this->employees = new ArrayCollection();
+    }
 
     public function getId(): int
     {
@@ -86,7 +94,7 @@ class Company
         $this->about = $about;
     }
 
-    public function getEmployee(): array
+    public function getEmployee(): ArrayCollection|Collection
     {
         return $this->employees;
     }

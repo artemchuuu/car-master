@@ -7,13 +7,11 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use CarMaster\Entity\Enum\MotorcycleType;
 
-#[Entity]
 class Motorbike extends Vehicle
 {
-    #[Column(type: Types::STRING, length: 55)]
     private MotorcycleType $type;
 
-    public function getType(): MotorcycleType
+    public function getTypeMoto(): MotorcycleType
     {
         return $this->type;
     }
@@ -26,7 +24,7 @@ class Motorbike extends Vehicle
     public function getFullInfo(): array
     {
         $fullInfo = parent::getFullInfo();
-        $fullInfo['type'] = $this->getType()->value;
+        $fullInfo['type'] = $this->getTypeMoto()->value;
 
         return $fullInfo;
     }

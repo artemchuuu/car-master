@@ -18,41 +18,24 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\Table;
 
-#[Entity]
-#[Table(name: 'vehicle')]
-#[InheritanceType('SINGLE_TABLE')]
-#[DiscriminatorColumn(name: 'type', type: 'string')]
-#[DiscriminatorMap(['Car' => Car::class, 'Motorbike' => Motorbike::class])]
 abstract class Vehicle
 {
-    #[Id]
-    #[GeneratedValue]
-    #[Column(type: Types::INTEGER)]
     private int $id;
 
-    #[Column(type: Types::STRING, length: 150)]
     private Brand $brand;
 
-    #[Column(type: Types::STRING, length: 150)]
     private string $model;
 
-    #[Column(type: Types::STRING, length: 150)]
     private string $color;
 
-    #[Column(type: Types::DATE_MUTABLE)]
     private DateTime $releaseDate;
 
-    #[ManyToOne(targetEntity: Client::class, inversedBy: 'vehicles')]
-    #[JoinColumn(name: 'client_id', referencedColumnName: 'id')]
     private Client $client;
 
-    #[Column(type: Types::STRING, length: 25)]
     private string $stateNumber;
 
-    #[Column(type: Types::INTEGER)]
     private int $mileage;
 
-    #[Column(type: Types::STRING, length: 17)]
     private string $vinCode;
 
     public function getId(): int
@@ -158,5 +141,10 @@ abstract class Vehicle
             'VinCode' => $this->vinCode,
 
         ];
+    }
+
+    public function getType(): string
+    {
+        return trim(str_replace(__NAMESPACE__, '', get_called_class()), '\\');
     }
 }

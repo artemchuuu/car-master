@@ -17,7 +17,8 @@ create table company
     name varchar(255) not null,
     email varchar(255) not null,
     website varchar(255) not null,
-    about text not null
+    about text not null,
+    employees_id int unsigned
 );
 
 create table employee
@@ -40,6 +41,7 @@ create table vehicle
     release_date date not null,
     state_number varchar(25) not null,
     mileage int not null,
+    type varchar(50) not null,
     vin_code varchar(17) not null,
     client_id int unsigned
 );

@@ -13,28 +13,18 @@ use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\Table;
 
-#[Entity]
-#[Table(name: 'client')]
 class Client
 {
-    #[Id]
-    #[GeneratedValue]
-    #[Column(type: Types::INTEGER)]
     private int $id;
 
-    #[Column(type: Types::STRING, length: 32)]
     private string $name;
 
-    #[Column(type: Types::STRING, length: 32)]
     private string $surname;
 
-    #[Column(type: Types::INTEGER)]
     private int $age;
 
-    #[OneToMany(targetEntity: Vehicle::class, mappedBy: 'client')]
-    private array $vehicles;
+    private array $vehicles = [];
 
-    #[Column(type: Types::INTEGER)]
     private int $phoneNumber;
 
     public function getId(): int
@@ -83,7 +73,7 @@ class Client
         return $this->vehicles;
     }
 
-    public function setVehicles(Vehicle $vehicles): void
+    public function addVehicles(Vehicle $vehicles): void
     {
         $this->vehicles[] = $vehicles;
     }

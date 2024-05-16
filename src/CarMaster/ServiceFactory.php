@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\ORMSetup;
+use Doctrine\ORM\EntityManagerInterface;
 use PDO;
 
 class ServiceFactory
@@ -20,6 +21,18 @@ class ServiceFactory
             getenv('DB_PASSWORD')
         );
         $pdo->query('SET NAMES utf8');
+
+        return $pdo;
+    }
+
+    public function createPDO(): PDO
+    {
+        $pdo = new PDO(
+            sprintf('mysql:host=%s;dbname=%s', getenv('DB_HOST'), getenv('DB_NAME')),
+            getenv('DB_USER'),
+            getenv('DB_PASSWORD')
+        );
+        $pdo->query('SET NAMES utf8mb4');
 
         return $pdo;
     }
