@@ -7,16 +7,11 @@ require __DIR__ . '/../vendor/autoload.php';
 use CarMaster\Database\ExportData;
 use CarMaster\Database\TopEmployees;
 use Faker\Factory as FakerFactory;
-use CarMaster\Entity\Car;
-use CarMaster\Entity\Client;
 use CarMaster\Entity\Company;
 use CarMaster\Entity\Employee;
-use CarMaster\Entity\Enum\Brand;
 use CarMaster\Entity\Exceptions\NameValidationException;
 use CarMaster\Entity\Exceptions\VinCodeValidationException;
-use CarMaster\Repository\VehicleRepository;
 use CarMaster\ServiceFactory;
-use Doctrine\DBAL\Driver\IBMDB2\Exception\Factory;
 use Doctrine\ORM\Exception\ORMException;
 
 try {
@@ -43,10 +38,10 @@ try {
     $employee->setAge($faker->numberBetween($min = 18, $max = 59));
 
     $entityManager->persist($employee);
-//    $entityManager->flush();
+    $entityManager->flush();
 
-//    $topEmployees = new TopEmployees();
-//    $topEmployees->execute();
+    $topEmployees = new TopEmployees();
+    $topEmployees->execute();
 
     $exportData = new ExportData();
     $exportData->exportEmployees();
