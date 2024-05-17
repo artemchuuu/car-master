@@ -9,10 +9,17 @@ use PDO;
 
 readonly class CarRepository
 {
+    /**
+     * @param PDO $pdo
+     */
     public function __construct(private PDO $pdo)
     {
     }
 
+    /**
+     * @param Car $car
+     * @return void
+     */
     public function add(Car $car): void
     {
         $statement = $this->pdo->prepare(
@@ -30,19 +37,27 @@ readonly class CarRepository
         ]);
     }
 
+    /**
+     * @param Car $car
+     * @return void
+     */
     public function delete(Car $car): void
     {
         $statement = $this->pdo->prepare("DELETE FROM cars WHERE vinCode = :vinCode");
         $statement->execute(['vinCode' => $car->getVinCode()]);
     }
 
+    /**
+     * @param string $vinCode
+     * @return void
+     */
     public function getInfo(string $vinCode): void
     {
         $statement = $this->pdo->prepare(
             "select cars.id, cars.brand, cars.model, cars.color, cars.stateNumber, cars.mileage, cars.vinCode, cars.releaseDate, carOwners.name, carOwners.surname
-from cars
-         join carOwners on cars.owner_id = carOwners.id
-where cars.vinCode = :vinCode;"
+                    from cars
+                    join carOwners on cars.owner_id = carOwners.id
+                    where cars.vinCode = :vinCode;"
         );
         $statement->execute(['vinCode' => $vinCode]);
     }

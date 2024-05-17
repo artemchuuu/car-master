@@ -11,6 +11,9 @@ use PDO;
 
 class ServiceFactory
 {
+    /**
+     * @return PDO
+     */
     public function create(): PDO
     {
         $pdo = new PDO(
@@ -23,6 +26,9 @@ class ServiceFactory
         return $pdo;
     }
 
+    /**
+     * @return PDO
+     */
     public function createPDO(): PDO
     {
         $pdo = new PDO(
@@ -35,6 +41,9 @@ class ServiceFactory
         return $pdo;
     }
 
+    /**
+     * @return EntityManager
+     */
     public function createORMEntityManager(): EntityManager
     {
         $config = ORMSetup::createAttributeMetadataConfiguration(

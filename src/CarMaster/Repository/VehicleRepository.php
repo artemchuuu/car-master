@@ -10,10 +10,17 @@ use PDO;
 
 readonly class VehicleRepository
 {
+    /**
+     * @param PDO $pdo
+     */
     public function  __construct(private PDO $pdo)
     {
     }
 
+    /**
+     * @param Vehicle $vehicle
+     * @return void
+     */
     public function add(Vehicle $vehicle): void
     {
         if (null == $vehicle->getId()) {
@@ -21,8 +28,9 @@ readonly class VehicleRepository
         }
 
         $statement = $this->pdo->prepare("
-        INSERT INTO vehicle('brand', 'model', 'color', 'release_date', 'state_number', 'mileage', 'type', 'vin_code', 'client_id')
-            VALUES (:brand, :model, :color, :release_date, :state_number, :mileage, :type, :vin_code, :client_id)");
+            INSERT INTO vehicle('brand', 'model', 'color', 'release_date', 'state_number', 'mileage', 'type', 'vin_code', 'client_id')
+            VALUES (:brand, :model, :color, :release_date, :state_number, :mileage, :type, :vin_code, :client_id)
+        ");
 
         $statement->execute([
             ':brand' => $vehicle->getBrand(),

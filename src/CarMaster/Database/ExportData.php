@@ -7,6 +7,9 @@ use CarMaster\ServiceFactory;
 
 class ExportData
 {
+    /**
+     * @return void
+     */
     public function exportEmployees(): void
     {
         $exportFileName = __DIR__ . '/../../../export/employees.csv';

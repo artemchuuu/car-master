@@ -9,6 +9,9 @@ use CarMaster\ServiceFactory;
 
 class TopEmployees
 {
+    /**
+     * @return void
+     */
     public function execute(): void
     {
         $services = new ServiceFactory();

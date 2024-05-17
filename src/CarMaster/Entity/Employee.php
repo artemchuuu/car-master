@@ -46,81 +46,136 @@ class Employee
     #[JoinColumn(name: 'company_id', referencedColumnName: 'id')]
     private Company $company;
 
+    /**
+     * @return int
+     */
     public function getId(): int
     {
         return $this->id;
     }
 
+    /**
+     * @param int $id
+     * @return void
+     */
     public function setId(int $id): void
     {
         $this->id = $id;
     }
 
+    /**
+     * @return string
+     */
     public function getName(): string
     {
         return $this->name;
     }
 
+    /**
+     * @param string $name
+     * @return void
+     */
     public function setName(string $name): void
     {
         $this->name = $name;
     }
 
+    /**
+     * @return string
+     */
     public function getSurname(): string
     {
         return $this->surname;
     }
 
+    /**
+     * @param string $surname
+     * @return void
+     */
     public function setSurname(string $surname): void
     {
         $this->surname = $surname;
     }
 
+    /**
+     * @return int
+     */
     public function getAge(): int
     {
         return $this->age;
     }
 
+    /**
+     * @param int $age
+     * @return void
+     */
     public function setAge(int $age): void
     {
         $this->age = $age;
     }
 
+    /**
+     * @return float
+     */
     public function getSalary(): float
     {
         return $this->salary;
     }
 
+    /**
+     * @param float $salary
+     * @return void
+     */
     public function setSalary(float $salary): void
     {
         $this->salary = $salary;
     }
 
+    /**
+     * @return string
+     */
     public function getSpecialization(): string
     {
         return $this->specialization;
     }
 
+    /**
+     * @param string $specialization
+     * @return void
+     */
     public function setSpecialization(string $specialization): void
     {
         $this->specialization = $specialization;
     }
 
+    /**
+     * @return Company
+     */
     public function getCompany(): Company
     {
         return $this->company;
     }
 
+    /**
+     * @param Company $company
+     * @return void
+     */
     public function setCompany(Company $company): void
     {
         $this->company = $company;
     }
 
+    /**
+     * @return string
+     */
     public function getFullName(): string
     {
         return $this->name . ' ' . $this->surname;
     }
 
+    /**
+     * @return array
+     */
     public function getFullInfo(): array
     {
         return [
@@ -132,6 +187,10 @@ class Employee
         ];
     }
 
+    /**
+     * @param string $name
+     * @return void
+     */
     public function validName(string $name): void
     {
         if (strlen($name) < 3) {
