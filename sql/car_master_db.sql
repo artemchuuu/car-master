@@ -24,11 +24,11 @@ create table company
 create table employee
 (
     id int unsigned auto_increment primary key,
-    name varchar(32) not null,
-    surname varchar(32) not null,
+    name varchar(255) not null,
+    surname varchar(255) not null,
     age int not null,
     salary float not null,
-    specialization varchar(124) not null,
+    specialization varchar(255) not null,
     company_id int unsigned
 );
 

@@ -6,9 +6,7 @@ namespace CarMaster;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\DBAL\DriverManager;
-use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\ORMSetup;
-use Doctrine\ORM\EntityManagerInterface;
 use PDO;
 
 class ServiceFactory
