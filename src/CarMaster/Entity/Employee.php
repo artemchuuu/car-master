@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace CarMaster\Entity;
 
 use CarMaster\Entity\Exceptions\NameValidationException;
+use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
@@ -125,10 +126,9 @@ class Employee
         return [
             'name' => $this->name,
             'surname' => $this->surname,
-            'age' => $this->age,
             'salary' => $this->salary,
             'specialization' => $this->specialization,
-            'company' => $this->company
+            'company_id' => $this->company->getId()
         ];
     }
 
