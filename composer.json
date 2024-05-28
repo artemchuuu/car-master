@@ -19,8 +19,10 @@
     "ext-pdo": "*",
     "doctrine/orm": "^3.1",
     "doctrine/dbal": "^4.0",
+    "symfony/console": "^7.0",
     "illuminate/database": "^11.7",
-    "symfony/console": "^7.0"
+    "symfony/routing": "^7.0",
+    "symfony/http-foundation": "^7.0"
   },
   "require-dev": {
     "fakerphp/faker": "^1.23",

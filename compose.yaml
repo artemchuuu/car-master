@@ -1,12 +1,14 @@
 services:
   php:
     build:
+      context: ./docker
+      target: php-dev
       args:
         XDEBUG_ENABLED: ${XDEBUG_ENABLED-false}
     depends_on:
       - db
     volumes:
-      - ./:/home/php-pro
+      - ./:${CODE_MOUNT_PATH}:delegated
     environment:
       - PHP_IDE_CONFIG
       - XDEBUG_CONFIG
@@ -14,6 +16,17 @@ services:
       - DB_NAME
       - DB_USER
       - DB_PASSWORD
+
+  nginx:
+    build:
+      context: ./docker
+      target: nginx-dev
+    depends_on:
+      - php
+    ports:
+      - "80:80"
+    volumes:
+      - ./:${CODE_MOUNT_PATH}:delegated
 
   db:
     image: mysql:8
