@@ -1,4 +1,18 @@
-FROM php:8.3
+###
+### Build Nginx development image
+###
+FROM nginx:1.26 as nginx-dev
+
+# Copies scripts and configs into image filesystem
+COPY nginx/default.conf /etc/nginx/conf.d/
+
+# Starts Nginx
+CMD ["nginx", "-g", "daemon off;"]
+
+###
+### Build PHP development image
+###
+FROM php:8.3-fpm as php-dev
 
 # Installs extra libraries
 RUN apt-get update && apt-get install -y \

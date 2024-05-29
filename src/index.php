@@ -13,6 +13,21 @@ use CarMaster\Entity\Exceptions\NameValidationException;
 use CarMaster\Entity\Exceptions\VinCodeValidationException;
 use CarMaster\ServiceFactory;
 use Doctrine\ORM\Exception\ORMException;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Matcher\UrlMatcher;
+use Symfony\Component\Routing\RequestContext;
+use Symfony\Component\Routing\Route;
+use Symfony\Component\Routing\RouteCollection;
+
+$routes = new RouteCollection();
+
+$routes->add('client', new Route('/client/{name}', ['name' => 'Client name']));
+
+$request = Request::createFromGlobals();
+
+$context = new RequestContext();
+$context->fromRequest($request);
+$matcher = new UrlMatcher($routes, $context);
 
 try {
 
@@ -37,14 +52,16 @@ try {
     $employee->setSurname($faker->lastName());
     $employee->setAge($faker->numberBetween($min = 18, $max = 59));
 
-    $entityManager->persist($employee);
-    $entityManager->flush();
+//    $entityManager->persist($employee);
+//    $entityManager->flush();
+//
+//    $topEmployees = new TopEmployees();
+//    $topEmployees->execute();
+//
+//    $exportData = new ExportData();
+//    $exportData->exportEmployees();
 
-    $topEmployees = new TopEmployees();
-    $topEmployees->execute();
-
-    $exportData = new ExportData();
-    $exportData->exportEmployees();
+    echo 'hello';
 
 } catch (PDOException $e) {
     echo "Database connection error: " . $e->getMessage();
