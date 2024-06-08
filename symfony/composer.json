@@ -1,4 +1,13 @@
 {
+    "name": "artemchumachenko/car-master",
+    "description": "-",
+    "version": "0.0.1",
+    "authors": [
+        {
+            "name": "Artem Chumachenko",
+            "email": "artem2007chum@outlook.com"
+        }
+    ],
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",
@@ -55,6 +64,7 @@
     },
     "autoload": {
         "psr-4": {
+            "CarMaster\\": "src/CarMaster",
             "App\\": "src/"
         }
     },
