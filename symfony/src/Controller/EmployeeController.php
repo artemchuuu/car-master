@@ -48,27 +48,10 @@ class EmployeeController extends AbstractController
     }
 
     #[Route('/high-salary/{count}', name: 'app_employee_high_salary')]
-    public function findEmployeesWithHighestSalary(string $count, EntityManagerInterface $entityManager): Response
+    public function EmployeesWithHighestSalary(string $count, EntityManagerInterface $entityManager): Response
     {
-        $queryBuilder = $entityManager
-            ->getRepository(Employee::class)
-            ->createQueryBuilder('e');
+        $employeeRepository = $entityManager->getRepository(Employee::class);
 
-        $queryBuilder->orderBy('e.salary', 'DESC');
-
-        $employeesCount = (int)$count;
-        $query = $queryBuilder->getQuery()
-            ->setMaxResults($employeesCount);
-
-        $employees = [];
-
-        foreach ($query->getResult() as $employee) {
-            /**
-             * @var Employee $employees
-            */
-            $employees[] = $employee->getFullInfo();
-        }
-
-        return new JsonResponse($employees);
+        return new JsonResponse($employeeRepository->findEmployeesWithHighestSalary($count));
     }
 }
