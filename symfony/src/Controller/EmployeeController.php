@@ -36,7 +36,7 @@ class EmployeeController extends AbstractController
         return new JsonResponse($employeeManager->createEmployee($company)->getFullInfo());
     }
 
-    #[Route('/high-salary/{count}', name: 'app_employee_high_salary')]
+    #[Route('/employees/high-salary/{count}', name: 'app_employee_high_salary')]
     public function EmployeesWithHighestSalary(string $count, EntityManagerInterface $entityManager): Response
     {
         $employeeRepository = $entityManager->getRepository(Employee::class);
