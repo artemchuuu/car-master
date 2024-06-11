@@ -2,10 +2,10 @@
 
 namespace App\Controller;
 
+use App\CarMaster\Manager\EmployeeManager;
 use CarMaster\Entity\Company;
 use CarMaster\Entity\Employee;
 use Doctrine\ORM\EntityManagerInterface;
-use Faker\Factory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,30 +21,19 @@ class EmployeeController extends AbstractController
         return new JsonResponse($employee->getFullInfo());
     }
 
-    #[Route('/employee/{firstName}/{lastName}', name: 'app_employee_create')]
-    public function  create(string $firstName, string $lastName, EntityManagerInterface $entityManager): Response
+    #[Route('/employee/{firstName}/{email}', name: 'app_employee_create')]
+    public function  create(string $firstName, string $email, EntityManagerInterface $entityManager, EmployeeManager $employeeManager): Response
     {
-        $faker = Factory::create();
+        $company = $entityManager->getRepository(Company::class)->findOneBy([
+            'name' => $firstName,
+            'email' => $email
+        ]);
 
-        $company = new Company();
-        $company->setName($faker->company());
-        $company->setAbout($faker->text());
-        $company->setEmail($faker->email());
+        if (!$company) {
+            throw $this->createNotFoundException('Company not found');
+        }
 
-        $entityManager->persist($company);
-
-        $employee = new Employee();
-        $employee->setName($firstName);
-        $employee->setSurname($lastName);
-        $employee->setAge($faker->numberBetween(18, 50));
-        $employee->setSalary($faker->numberBetween(300, 1000));
-        $employee->setSpecialization($faker->jobTitle());
-        $employee->setCompany($company);
-
-        $entityManager->persist($employee);
-        $entityManager->flush();
-
-        return new JsonResponse($employee->getFullInfo());
+        return new JsonResponse($employeeManager->createEmployee($company)->getFullInfo());
     }
 
     #[Route('/high-salary/{count}', name: 'app_employee_high_salary')]

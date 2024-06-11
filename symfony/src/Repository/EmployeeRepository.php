@@ -17,7 +17,9 @@ class EmployeeRepository extends ServiceEntityRepository
     {
         $queryBuilder = $this->createQueryBuilder('e');
 
-        $queryBuilder->orderBy('e.salary', 'DESC');
+        $queryBuilder
+            ->orderBy('e.salary', 'DESC')
+            ->where('e.age < 30');
 
         $employeesCount = (int)$count;
         $query = $queryBuilder->getQuery()
