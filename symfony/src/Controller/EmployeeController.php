@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\CarMaster\Manager\EmployeeManager;
+use CarMaster\Manager\EmployeeManager;
 use CarMaster\Entity\Company;
 use CarMaster\Entity\Employee;
 use Doctrine\ORM\EntityManagerInterface;

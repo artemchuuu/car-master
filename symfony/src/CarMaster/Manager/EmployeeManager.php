@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\CarMaster\Manager;
+namespace CarMaster\Manager;
 
 use CarMaster\Entity\Company;
 use CarMaster\Entity\Employee;
