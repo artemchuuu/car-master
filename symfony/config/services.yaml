@@ -17,8 +17,16 @@ services:
         resource: '../src/'
         exclude:
             - '../src/DependencyInjection/'
-            - '../src/Entity/'
+            - '../src/CarMaster/'
             - '../src/Kernel.php'
+
+    CarMaster\:
+        resource: '../src/CarMaster/'
+        exclude:
+            - '../src/CarMaster/Entity/'
+
+    Faker\Generator:
+        factory: [ 'Faker\Factory', 'create' ]
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
