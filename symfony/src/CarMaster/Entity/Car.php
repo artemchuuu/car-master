@@ -4,37 +4,96 @@ declare(strict_types=1);
 
 namespace CarMaster\Entity;
 
-use CarMaster\Entity\Enum\BodyType;
+use CarMaster\Entity\Enum\Brand;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\Table;
 
-class Car extends Vehicle
+#[Entity]
+#[Table(name: 'car')]
+class Car
 {
-    private BodyType $bodyType;
+    #[Id]
+    #[GeneratedValue]
+    #[Column(type: 'integer')]
+    private int $id;
+
+    #[Column(type: 'string', length: 150)]
+    private Brand $brand;
+
+    #[Column(type: 'string', length: 150)]
+    private string $model;
+
+    #[Column(type: 'string', length: 150)]
+    private string $vinCode;
 
     /**
-     * @return BodyType
+     * @return int
      */
-    public function getBodyType(): BodyType
+    public function getId(): int
     {
-        return $this->bodyType;
+        return $this->id;
     }
 
     /**
-     * @param BodyType $bodyType
+     * @param int $id
      * @return void
      */
-    public function setBodyType(BodyType $bodyType): void
+    public function setId(int $id): void
     {
-        $this->bodyType = $bodyType;
+        $this->id = $id;
     }
 
     /**
-     * @return array
+     * @return Brand
      */
-    public function getFullName(): array
+    public function getBrand(): Brand
     {
-        $fullInfo = parent::getFullInfo();
-        $fullInfo['BodyType'] = $this->getBodyType()->value;
+        return $this->brand;
+    }
 
-        return $fullInfo;
+    /**
+     * @param Brand $brand
+     * @return void
+     */
+    public function setBrand(Brand $brand): void
+    {
+        $this->brand = $brand;
+    }
+
+    /**
+     * @return string
+     */
+    public function getModel(): string
+    {
+        return $this->model;
+    }
+
+    /**
+     * @param string $model
+     * @return void
+     */
+    public function setModel(string $model): void
+    {
+        $this->model = $model;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVinCode(): string
+    {
+        return $this->vinCode;
+    }
+
+    /**
+     * @param string $vinCode
+     * @return void
+     */
+    public function setVinCode(string $vinCode): void
+    {
+        $this->vinCode = $vinCode;
     }
 }
