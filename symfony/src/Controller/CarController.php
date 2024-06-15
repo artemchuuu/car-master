@@ -2,10 +2,9 @@
 
 namespace App\Controller;
 
-use CarMaster\Entity\Car;
+use CarMaster\Manager\CarManager;
 use Doctrine\ORM\EntityManagerInterface;
 use CarMaster\Entity\Client;
-use Faker\Factory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
@@ -22,28 +21,18 @@ class CarController extends AbstractController
     }
 
 
-    #[Route('/car/{brand}/{model}/{vinCode}', name: 'app_car_create')]
-    public function create(string $brand, string $model, string $vinCode, EntityManagerInterface $entityManager): JsonResponse
+    #[Route('/car/{name}/{surname}', name: 'app_car_create')]
+    public function create(string $name, string $surname, EntityManagerInterface $entityManager, CarManager $carManager): JsonResponse
     {
-        $faker = Factory::create();
+        $client = $entityManager->getRepository(Client::class)->findOneBy([
+            'name' => $name,
+            'surname' => $surname,
+        ]);
 
-        $client = new Client();
-        $client->setName($faker->firstName());
-        $client->setSurname($faker->lastName());
+        if (!$client) {
+            throw $this->createNotFoundException('Client not found');
+        }
 
-        $entityManager->persist($client);
-        $entityManager->flush();
-
-        $car = new Car();
-        $car->setBrand($brand);
-        $car->setModel($model);
-        $car->setVinCode($vinCode);
-        $car->setClient($client);
-
-
-        $entityManager->persist($car);
-        $entityManager->flush();
-
-        return $this->json([$car->getFullInfo()]);
+        return new JsonResponse($carManager->createCar($client)->getFullInfo());
     }
 }

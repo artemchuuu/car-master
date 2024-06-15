@@ -75,4 +75,13 @@ class Part
     {
         $this->price = $price;
     }
+
+    public function getFullInfo(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'price' => $this->price
+        ];
+    }
 }

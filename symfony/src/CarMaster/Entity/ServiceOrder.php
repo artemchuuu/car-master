@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\Table;
 
-#[Entity]
+#[Entity(repositoryClass: "ServiceOrderRepository")]
 #[Table(name: 'service_order')]
 class ServiceOrder
 {
@@ -22,7 +22,7 @@ class ServiceOrder
     private int $id;
 
     #[Column(type: 'integer')]
-    private string $serviceNumber;
+    private int $serviceNumber;
 
     #[ManyToOne(targetEntity: Car::class, inversedBy: 'orders')]
     #[JoinColumn(name: 'car_id', referencedColumnName: 'id')]
@@ -31,10 +31,6 @@ class ServiceOrder
     #[ManyToOne(targetEntity: Part::class, inversedBy: 'orders')]
     #[JoinColumn(name: 'part_id', referencedColumnName: 'id')]
     private Part $part;
-
-    #[ManyToOne(targetEntity: Client::class, inversedBy: 'orders')]
-    #[JoinColumn(name: 'client_id', referencedColumnName: 'id')]
-    private Client $client;
 
     #[Column(name: 'work_hours', type: 'integer')]
     private int $workHours;
@@ -57,18 +53,18 @@ class ServiceOrder
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getServiceNumber(): string
+    public function getServiceNumber(): int
     {
         return $this->serviceNumber;
     }
 
     /**
-     * @param string $serviceNumber
+     * @param int $serviceNumber
      * @return void
      */
-    public function setServiceNumber(string $serviceNumber): void
+    public function setServiceNumber(int $serviceNumber): void
     {
         $this->serviceNumber = $serviceNumber;
     }
@@ -108,23 +104,6 @@ class ServiceOrder
     }
 
     /**
-     * @return Client
-     */
-    public function getClient(): Client
-    {
-        return $this->client;
-    }
-
-    /**
-     * @param Client $client
-     * @return void
-     */
-    public function setClient(Client $client): void
-    {
-        $this->client = $client;
-    }
-
-    /**
      * @return int
      */
     public function getWorkHours(): int
@@ -139,5 +118,16 @@ class ServiceOrder
     public function setWorkHours(int $workHours): void
     {
         $this->workHours = $workHours;
+    }
+
+    public function getFullInfo(): array
+    {
+        return [
+            'id' => $this->id,
+            'serviceNumber' => $this->serviceNumber,
+            'car' => $this->car->getVinCode(),
+            'part' => $this->part->getName(),
+            'workHours' => $this->workHours,
+        ];
     }
 }

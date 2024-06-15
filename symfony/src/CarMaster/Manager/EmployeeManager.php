@@ -11,7 +11,6 @@ use Faker\Generator;
 
 readonly class EmployeeManager
 {
-    //
     public function __construct(private EntityManagerInterface $entityManager, private Generator $faker)
     {
     }
@@ -25,6 +24,7 @@ readonly class EmployeeManager
         $employee->setSalary($this->faker->numberBetween(300, 1000));
         $employee->setSpecialization($this->faker->jobTitle());
         $employee->setCompany($company);
+
         $this->entityManager->persist($employee);
         $this->entityManager->flush();
 

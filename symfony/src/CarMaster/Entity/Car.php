@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\Table;
 
-#[Entity]
+#[Entity(repositoryClass: "CarRepository")]
 #[Table(name: 'car')]
 class Car
 {
