@@ -8,6 +8,8 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\Table;
 
 #[Entity]
@@ -16,20 +18,26 @@ class ServiceOrder
 {
     #[Id]
     #[GeneratedValue]
-    #[Column(type: 'integer')]
+    #[Column(name: 'id', type: 'integer')]
     private int $id;
 
     #[Column(type: 'integer')]
     private string $serviceNumber;
 
-    // TODO: приєднати Car
+    #[ManyToOne(targetEntity: Car::class, inversedBy: 'orders')]
+    #[JoinColumn(name: 'car_id', referencedColumnName: 'id')]
     private Car $car;
 
-    // TODO: приєднати Part
+    #[ManyToOne(targetEntity: Part::class, inversedBy: 'orders')]
+    #[JoinColumn(name: 'part_id', referencedColumnName: 'id')]
     private Part $part;
 
-    // TODO: приєднати Client
+    #[ManyToOne(targetEntity: Client::class, inversedBy: 'orders')]
+    #[JoinColumn(name: 'client_id', referencedColumnName: 'id')]
     private Client $client;
+
+    #[Column(name: 'work_hours', type: 'integer')]
+    private int $workHours;
 
     /**
      * @return int
@@ -114,5 +122,22 @@ class ServiceOrder
     public function setClient(Client $client): void
     {
         $this->client = $client;
+    }
+
+    /**
+     * @return int
+     */
+    public function getWorkHours(): int
+    {
+        return $this->workHours;
+    }
+
+    /**
+     * @param int $workHours
+     * @return void
+     */
+    public function setWorkHours(int $workHours): void
+    {
+        $this->workHours = $workHours;
     }
 }

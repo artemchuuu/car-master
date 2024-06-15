@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace CarMaster\Entity;
 
 use CarMaster\Entity\Exceptions\NameValidationException;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\Table;
 
 #[Entity]
@@ -27,8 +29,9 @@ class Client
     #[Column(type: 'string', length: 150)]
     private string $surname;
 
-    #[OneToOne(targetEntity: Car::class, inversedBy: 'clients')]
-    private array $cars;
+    #[ManyToMany(targetEntity: Car::class, inversedBy: 'clients')]
+    #[JoinTable(name: 'client_car')]
+    private Collection $cars;
 
     public function getId(): int
     {
@@ -61,12 +64,12 @@ class Client
         $this->surname = $surname;
     }
 
-    public function getCars(): array
+    public function getCars(): Collection
     {
         return $this->cars;
     }
 
-    public function setCars(array $cars): void
+    public function setCars(Collection $cars): void
     {
         $this->cars = $cars;
     }

@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace CarMaster\Entity;
 
-use CarMaster\Entity\Enum\Brand;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\Table;
 
 #[Entity]
@@ -21,13 +22,17 @@ class Car
     private int $id;
 
     #[Column(type: 'string', length: 150)]
-    private Brand $brand;
+    private string $brand;
 
     #[Column(type: 'string', length: 150)]
     private string $model;
 
     #[Column(type: 'string', length: 150)]
     private string $vinCode;
+
+    #[ManyToOne(targetEntity: Client::class, inversedBy: 'cars')]
+    #[JoinColumn(name: 'client_id', referencedColumnName: 'id')]
+    private Client $client;
 
     /**
      * @return int
@@ -47,18 +52,18 @@ class Car
     }
 
     /**
-     * @return Brand
+     * @return string
      */
-    public function getBrand(): Brand
+    public function getBrand(): string
     {
         return $this->brand;
     }
 
     /**
-     * @param Brand $brand
+     * @param string $brand
      * @return void
      */
-    public function setBrand(Brand $brand): void
+    public function setBrand(string $brand): void
     {
         $this->brand = $brand;
     }
@@ -95,5 +100,28 @@ class Car
     public function setVinCode(string $vinCode): void
     {
         $this->vinCode = $vinCode;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFullInfo(): array
+    {
+        return [
+            'id' => $this->id,
+            'brand' => $this->brand,
+            'model' => $this->model,
+            'vinCode' => $this->vinCode,
+        ];
+    }
+
+    public function getClient(): Client
+    {
+        return $this->client;
+    }
+
+    public function setClient(Client $client): void
+    {
+        $this->client = $client;
     }
 }
