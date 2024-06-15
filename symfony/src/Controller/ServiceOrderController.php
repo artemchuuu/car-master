@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use CarMaster\Entity\Car;
 use CarMaster\Manager\ServiceOrderManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,6 +29,10 @@ class ServiceOrderController extends AbstractController
     #[Route('/service-order/create/{serviceNumber}/{carVinCode}/{partId}/{workHours}', name: 'app_service_order_create')]
     public function create(string $serviceNumber, string $carVinCode, string $partId, EntityManagerInterface $entityManager, ServiceOrderManager $serviceOrderManager): JsonResponse
     {
-        return new JsonResponse([$serviceOrderManager->createOrder($serviceNumber, $carVinCode, $partId, $entityManager)]);
+        $car = $this->$entityManager->getRepository(Car::class)->findOneBy([
+            'vin_code' => $carVinCode
+        ]);
+
+        return new JsonResponse([$serviceOrderManager->createOrder($serviceNumber, $car, $partId, $entityManager)]);
     }
 }
