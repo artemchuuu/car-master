@@ -109,10 +109,10 @@ class Car
     public function getFullInfo(): array
     {
         return [
-            'id' => $this->id,
-            'brand' => $this->brand,
-            'model' => $this->model,
-            'vinCode' => $this->vinCode,
+            'id' => $this->getId(),
+            'brand' => $this->getBrand(),
+            'model' => $this->getModel(),
+            'vinCode' => $this->getVinCode(),
         ];
     }
 

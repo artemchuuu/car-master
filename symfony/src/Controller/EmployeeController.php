@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class EmployeeController extends AbstractController
+final class EmployeeController extends AbstractController
 {
     #[Route('/employee/{id}', name: 'app_employee')]
     public function index(string $id, EntityManagerInterface $entityManager): Response

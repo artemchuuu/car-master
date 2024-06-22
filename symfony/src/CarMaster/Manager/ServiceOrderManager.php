@@ -11,10 +11,20 @@ use Doctrine\ORM\EntityManagerInterface;
 
 readonly class ServiceOrderManager
 {
+    /**
+     * @param EntityManagerInterface $entityManager
+     */
     public function __construct(private EntityManagerInterface $entityManager)
     {
     }
 
+    /**
+     * @param $serviceNumber
+     * @param Car $car
+     * @param Part $part
+     * @param $workHours
+     * @return ServiceOrder
+     */
     public function createOrder($serviceNumber, Car $car, Part $part, $workHours): ServiceOrder
     {
         $serviceOrder = new ServiceOrder();

@@ -6,13 +6,20 @@ use CarMaster\Entity\Employee;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-class EmployeeRepository extends ServiceEntityRepository
+final class EmployeeRepository extends ServiceEntityRepository
 {
+    /**
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Employee::class);
     }
 
+    /**
+     * @param int $count
+     * @return array
+     */
     public function findEmployeesWithHighestSalary(int $count): array
     {
         $queryBuilder = $this->createQueryBuilder('e');

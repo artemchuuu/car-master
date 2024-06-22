@@ -163,24 +163,17 @@ class Employee
     }
 
     /**
-     * @return string
-     */
-    public function getFullName(): string
-    {
-        return $this->name . ' ' . $this->surname;
-    }
-
-    /**
      * @return array
      */
     public function getFullInfo(): array
     {
         return [
-            'name' => $this->name,
-            'surname' => $this->surname,
-            'salary' => $this->salary,
-            'specialization' => $this->specialization,
-            'company_id' => $this->company->getId()
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'surname' => $this->getSurname(),
+            'salary' => $this->getSalary(),
+            'specialization' => $this->getSpecialization(),
+            'company_id' => $this->getCompany()->getId()
         ];
     }
 

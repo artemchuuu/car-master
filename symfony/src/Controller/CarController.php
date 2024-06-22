@@ -9,18 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 
-class CarController extends AbstractController
+final class CarController extends AbstractController
 {
-    #[Route('/car', name: 'app_car')]
-    public function index(): JsonResponse
-    {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/CarController.php',
-        ]);
-    }
-
-
     #[Route('/car/{name}/{surname}', name: 'app_car_create')]
     public function create(string $name, string $surname, EntityManagerInterface $entityManager, CarManager $carManager): JsonResponse
     {

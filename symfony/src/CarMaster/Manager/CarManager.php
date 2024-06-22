@@ -11,10 +11,18 @@ use Faker\Generator;
 
 readonly class CarManager
 {
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param Generator $faker
+     */
     public function __construct(private EntityManagerInterface $entityManager, private Generator $faker)
     {
     }
 
+    /**
+     * @param Client $client
+     * @return Car
+     */
     public function createCar(Client $client): Car
     {
         $car = new Car();

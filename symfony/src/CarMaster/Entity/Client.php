@@ -74,6 +74,16 @@ class Client
         $this->cars = $cars;
     }
 
+    public function getFullInfo(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'surname' => $this->getSurname(),
+            'cars' => $this->getCars()
+        ];
+    }
+
     /**
      * @param string $name
      * @return void

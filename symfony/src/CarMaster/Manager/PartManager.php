@@ -9,10 +9,18 @@ use Doctrine\ORM\EntityManagerInterface;
 
 readonly class PartManager
 {
+    /**
+     * @param EntityManagerInterface $entityManager
+     */
     public function __construct(private EntityManagerInterface $entityManager)
     {
     }
 
+    /**
+     * @param $name
+     * @param $price
+     * @return Part
+     */
     public function createPart($name, $price): Part
     {
         $part = new Part();

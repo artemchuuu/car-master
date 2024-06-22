@@ -11,10 +11,18 @@ use Faker\Generator;
 
 readonly class EmployeeManager
 {
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param Generator $faker
+     */
     public function __construct(private EntityManagerInterface $entityManager, private Generator $faker)
     {
     }
 
+    /**
+     * @param Company $company
+     * @return Employee
+     */
     public function createEmployee(Company $company): Employee
     {
         $employee = new Employee();

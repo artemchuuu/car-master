@@ -2,69 +2,53 @@
 
 use car_master_db;
 
-create table client
-(
-    id int unsigned auto_increment primary key,
-    name varchar(32) not null,
-    surname varchar(32) not null,
-    age int not null,
-    phone_number int not null
+CREATE TABLE employee (
+                          id INT AUTO_INCREMENT PRIMARY KEY,
+                          name VARCHAR(255),
+                          surname VARCHAR(255),
+                          age INT,
+                          salary FLOAT,
+                          specialization VARCHAR(255),
+                          company_id INT,
+                          FOREIGN KEY (company_id) REFERENCES company(id)
 );
 
-create table company
-(
-    id int unsigned auto_increment primary key,
-    name varchar(255) not null,
-    email varchar(255) not null,
-    website varchar(255) not null,
-    about text not null,
-    employees_id int unsigned
+CREATE TABLE company (
+                         id INT AUTO_INCREMENT PRIMARY KEY,
+                         name VARCHAR(255),
+                         email VARCHAR(255),
+                         website VARCHAR(255),
+                         about TEXT
 );
 
-create table employee
-(
-    id int unsigned auto_increment primary key,
-    name varchar(255) not null,
-    surname varchar(255) not null,
-    age int not null,
-    salary float not null,
-    specialization varchar(255) not null,
-    company_id int unsigned
+create table car (
+                     id int auto_increment primary key,
+                     brand varchar(150),
+                     model varchar(150),
+                     vin_code varchar(150),
+                     client_id int
 );
 
-create table vehicle
-(
-    id int unsigned auto_increment primary key,
-    brand varchar(150) not null,
-    model varchar(150) not null,
-    color varchar(150) not null,
-    release_date date not null,
-    state_number varchar(25) not null,
-    mileage int not null,
-    type varchar(50) not null,
-    vin_code varchar(17) not null,
-    client_id int unsigned
+create table client (
+                        id int auto_increment primary key,
+                        name varchar(150),
+                        surname varchar(150)
 );
 
-create table car_part
-(
-    id int unsigned auto_increment primary key,
-    name varchar(255) not null,
-    number int not null,
-    price float not null,
-    description text not null,
-    part_condition varchar(150) not null,
-    added_date date not null,
-    manufacturer varchar(150)
+create table part (
+                      id int auto_increment primary key,
+                      name varchar(150),
+                      price float
 );
 
-create table company_employees
-(
-    company_id int unsigned,
-    employee_id int unsigned
+create table service_order (
+                               id int auto_increment primary key,
+                               service_number int not null,
+                               car_id int not null,
+                               part_id int not null,
+                               work_hours int not null,
+                               foreign key (car_id) references car(id),
+                               foreign key (part_id) references part(id)
 );
 
-alter table employee add foreign key (company_id) references company(id);
-alter table vehicle add foreign key (client_id) references  client(id);
-alter table company_employees add foreign key (company_id) references company(id);
-alter table company_employees add foreign key (employee_id) references employee(id);
+

@@ -12,17 +12,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 
-class ServiceOrderController extends AbstractController
+final class ServiceOrderController extends AbstractController
 {
-    #[Route('/service', name: 'app_service_order')]
-    public function index(): JsonResponse
-    {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/ServiceOrderController.php',
-        ]);
-    }
-
     #[Route('/service/{id}/total-cost', name: 'app_service_order_total_cost')]
     public function totalCost($id, ServiceCostCalculator $serviceCostCalculator, EntityManagerInterface $entityManager): JsonResponse
     {
@@ -30,9 +21,17 @@ class ServiceOrderController extends AbstractController
 
         $serviceOrder = $serviceOrderRepository->find($id);
 
-        $serviceCostCalculator->calculateTotalCost($serviceOrder);
+        $totalCost = $serviceCostCalculator->calculateTotalCost($serviceOrder);
 
-        return new JsonResponse([$serviceCostCalculator]);
+        $result = [
+            'serviceNumber' => $serviceOrder->getServiceNumber(),
+            'carBrand' => $serviceOrder->getCar()->getBrand(),
+            'carModel' => $serviceOrder->getCar()->getModel(),
+            'carVinCode' => $serviceOrder->getCar()->getVinCode(),
+            'totalCost' => $totalCost,
+        ];
+
+        return new JsonResponse($result);
     }
 
     #[Route('/service-order/create/{serviceNumber}/{carVinCode}/{partId}/{workHours}', name: 'app_service_order_create')]

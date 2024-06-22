@@ -15,7 +15,7 @@ use Doctrine\ORM\Mapping\Table;
 
 #[Entity(repositoryClass: ServiceOrderRepository::class)]
 #[Table(name: 'service_order')]
-class ServiceOrder
+class ServiceOrder implements ServiceOrderInterface
 {
     #[Id]
     #[GeneratedValue]
@@ -127,11 +127,11 @@ class ServiceOrder
     public function getFullInfo(): array
     {
         return [
-            'id' => $this->id,
-            'serviceNumber' => $this->serviceNumber,
-            'car' => $this->car->getVinCode(),
-            'part' => $this->part->getName(),
-            'workHours' => $this->workHours,
+            'id' => $this->getId(),
+            'serviceNumber' => $this->getServiceNumber(),
+            'car' => $this->getCar()->getVinCode(),
+            'part' => $this->getPart()->getName(),
+            'workHours' => $this->getWorkHours(),
         ];
     }
 }
