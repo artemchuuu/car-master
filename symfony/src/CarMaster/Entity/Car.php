@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CarMaster\Entity;
 
+use App\Repository\CarRepository;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
@@ -12,7 +13,7 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\Table;
 
-#[Entity(repositoryClass: "CarRepository")]
+#[Entity(repositoryClass: CarRepository::class)]
 #[Table(name: 'car')]
 class Car
 {

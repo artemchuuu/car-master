@@ -4,17 +4,18 @@ declare(strict_types=1);
 
 namespace CarMaster\Service;
 
-use App\CarMaster\Service\ServiceCostCalculatorInterface;
-use CarMaster\Entity\Part;
+use CarMaster\Entity\ServiceOrder;
 
-class ServiceCostCalculator implements ServiceCostCalculatorInterface
+class ServiceCostCalculator
 {
-//    private Part $part;
-//
-//    private const HOURLY_PAYMANT = 30;
+    private const HOURLY_PAY = 30;
 
-//    public function calculateTotalCost(ServiceCostCalculatorInterface $serviceCostCalculator,  $numberOfHours): int
-//    {
-//        echo $part->getPrice() + $numberOfHours * self::HOURLY_PAYMANT;
-//    }
+    /**
+     * @param ServiceOrder $serviceOrder
+     * @return float
+     */
+    public function calculateTotalCost(ServiceOrder $serviceOrder): float
+    {
+        return $serviceOrder->getPart()->getPrice() + $serviceOrder->getWorkHours() * self::HOURLY_PAY;
+    }
 }

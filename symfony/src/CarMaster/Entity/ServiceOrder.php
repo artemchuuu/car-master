@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace CarMaster\Entity;
 
+use App\Repository\ServiceOrderRepository;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
@@ -12,7 +13,7 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\Table;
 
-#[Entity(repositoryClass: "ServiceOrderRepository")]
+#[Entity(repositoryClass: ServiceOrderRepository::class)]
 #[Table(name: 'service_order')]
 class ServiceOrder
 {
@@ -120,6 +121,9 @@ class ServiceOrder
         $this->workHours = $workHours;
     }
 
+    /**
+     * @return array
+     */
     public function getFullInfo(): array
     {
         return [
