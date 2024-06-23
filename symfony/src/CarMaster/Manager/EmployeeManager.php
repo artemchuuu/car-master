@@ -11,11 +11,18 @@ use Faker\Generator;
 
 readonly class EmployeeManager
 {
-    //
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param Generator $faker
+     */
     public function __construct(private EntityManagerInterface $entityManager, private Generator $faker)
     {
     }
 
+    /**
+     * @param Company $company
+     * @return Employee
+     */
     public function createEmployee(Company $company): Employee
     {
         $employee = new Employee();
@@ -25,6 +32,7 @@ readonly class EmployeeManager
         $employee->setSalary($this->faker->numberBetween(300, 1000));
         $employee->setSpecialization($this->faker->jobTitle());
         $employee->setCompany($company);
+
         $this->entityManager->persist($employee);
         $this->entityManager->flush();
 

@@ -148,11 +148,12 @@ class Company
     public function getFullInfo(): array
     {
         return [
-            "name" => $this->name,
-            "email" => $this->email,
-            "website" => $this->website,
-            "about" => $this->about,
-            "employee" => $this->employees
+            "id" => $this->getId(),
+            "name" => $this->getName(),
+            "email" => $this->getEmail(),
+            "website" => $this->getWebsite(),
+            "about" => $this->getAbout(),
+            "employee" => $this->getEmployee()
         ];
     }
 }
