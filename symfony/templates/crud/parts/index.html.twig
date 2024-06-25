@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h2>Part list</h2>
+
+    {% if app.request.get('page') > 1 %}
+        | <a href="{{ path('app_crud_part_index', {'page': 1}) }}">= First</a>
+        | <a href="{{ path('app_crud_part_index', {'page': app.request.get('page') - 1}) }}">Previous</a>
+    {% endif %}
+
+        | <a href="{{ path('app_crud_part_index', {'page': app.request.get('page', 1) + 1}) }}">Next</a>
+
+    <a href="{{ path('app_crud_home_index') }}">Back to home</a>
+
+    {% if part|length %}
+        {% for part in parts %}
+
+            <p>
+                <span class="part-label">Name: </span>{{ part.name }}<br>
+                <span class="part-label">Price: </span>{{ part.price }}<br>
+            </p>
+
+        {% endfor %}
+    {% else %}
+        <p>No parts found.</p>
+    {% endif %}
+{% endblock body %}
