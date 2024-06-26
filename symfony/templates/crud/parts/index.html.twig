@@ -2,27 +2,29 @@
 
 {% block body %}
 
-    <h2>Part list</h2>
+    <h2>Parts information</h2>
 
-    {% if app.request.get('page') > 1 %}
-        | <a href="{{ path('app_crud_part_index', {'page': 1}) }}">= First</a>
-        | <a href="{{ path('app_crud_part_index', {'page': app.request.get('page') - 1}) }}">Previous</a>
-    {% endif %}
+    <div class="part-page-nav">
+        <a href="{{ path('app_crud_part_new') }}">Add new part</a> |
+        {% if app.request.get('page') > 1 %}
+            <a href="{{ path('app_crud_part_index', {'page': 1 }) }}">&lArr; First</a>
+            | <a href="{{ path('app_crud_part_index', {'page': app.request.get('page') - 1 }) }}">&larr; Previous</a> |
+        {% endif %}
 
-        | <a href="{{ path('app_crud_part_index', {'page': app.request.get('page', 1) + 1}) }}">Next</a>
+        <a href="{{ path('app_crud_part_index', {'page': app.request.get('page', 1) + 1 }) }}">Next &rarr;</a>
+    </div>
 
-    <a href="{{ path('app_crud_home_index') }}">Back to home</a>
+    {% for part in parts %}
+        <div>
+            <p><b>Name:</b> {{ part.name }}</p>
+            <p><b>Price:</b> {{ part.price }}</p>
+        </div>
+        <div class="part-action">
+            <a href="{{ path('app_crud_part_show', {'id': part.id }) }}">Show</a>
+            | <a href="{{ path('app_crud_part_update', {'id': part.id}) }}">Edit</a> |
+            <a href="{{ path('app_crud_part_delete', {'id': part.id }) }}"
+               onclick="return confirm('Delete part {{ part.name }}?')">Delete</a>
+        </div>
+    {% endfor %}
 
-    {% if part|length %}
-        {% for part in parts %}
-
-            <p>
-                <span class="part-label">Name: </span>{{ part.name }}<br>
-                <span class="part-label">Price: </span>{{ part.price }}<br>
-            </p>
-
-        {% endfor %}
-    {% else %}
-        <p>No parts found.</p>
-    {% endif %}
 {% endblock body %}
