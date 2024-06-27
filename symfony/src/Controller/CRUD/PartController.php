@@ -53,8 +53,8 @@ final class PartController extends AbstractController
     }
 
     #[Route('parts/new', name: 'app_crud_part_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response {
-
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    {
         $form = $this->createForm(PartType::class, new Part());
         $form->handleRequest($request);
 
@@ -72,7 +72,10 @@ final class PartController extends AbstractController
         ]);
     }
 
-    #[Route('parts/{id}/_update', name: 'app_crud_part_update', requirements: ['id' => Requirement::POSITIVE_INT], methods: ['GET', 'POST'])]
+    #[Route('parts/{id}/_update', name: 'app_crud_part_update', requirements: ['id' => Requirement::POSITIVE_INT], methods: [
+        'GET',
+        'POST'
+    ])]
     public function update(Part $part, Request $request, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(PartType::class, $part);
