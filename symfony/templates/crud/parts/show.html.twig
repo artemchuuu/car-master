@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h2>{{ part.name }}</h2>
+
+    <span class="part-label">Name: </span>{{ part.name }}<br>
+    <span class="part-label">Price: </span>{{ part.price }}<br>
+
+    <a href="{{ path('app_crud_part_index') }}">Back to all parts</a>
+
+{% endblock body %}

@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Table;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[Entity]
 #[Table(name: 'part')]
@@ -20,9 +21,11 @@ class Part
     private int $id;
 
     #[Column(type: 'string', length: 150)]
+    #[Assert\Length(min: 1)]
     private string $name;
 
     #[Column(type: 'integer')]
+    #[Assert\Range(min: 10, max: 25000)]
     private float $price;
 
     /**

@@ -1,0 +1,9 @@
+{%- block choice_widget_expanded -%}
+    <div {{ block('widget_container_attributes') }}>
+        {%- for child in form %}
+            <label>
+                {{- form_widget(child) -}}&nbsp;{{ child.vars.label }}
+            </label>
+        {% endfor -%}
+    </div>
+{%- endblock choice_widget_expanded -%}

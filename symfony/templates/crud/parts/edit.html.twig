@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1>Edit {{ part.name }}</h1>
+
+    {{ include('crud/parts/_form.html.twig', { form: form }) }}
+
+{% endblock %}
