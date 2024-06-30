@@ -15,6 +15,8 @@ use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Requirement\Requirement;
 
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+
 use const FILTER_VALIDATE_REGEXP;
 
 final class PartController extends AbstractController
@@ -40,6 +42,7 @@ final class PartController extends AbstractController
     }
 
     #[Route('parts/{id}/_delete', name: 'app_crud_part_delete')]
+    #[IsGranted('ROLE_ADMIN')] // дасть доступ тільки в тому випадку, якщо юзер має роль ROLE_ADMIN
     public function delete(Part $part, EntityManagerInterface $entityManager): Response
     {
         $entityManager->remove($part);
@@ -53,6 +56,8 @@ final class PartController extends AbstractController
     #[Route('parts/new', name: 'app_crud_part_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN'); // альтернативний варіант
+
         $form = $this->createForm(PartType::class, new Part());
         $form->handleRequest($request);
 
@@ -74,6 +79,7 @@ final class PartController extends AbstractController
         'GET',
         'POST'
     ])]
+    #[IsGranted('ROLE_ADMIN')]
     public function update(Part $part, Request $request, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(PartType::class, $part);
