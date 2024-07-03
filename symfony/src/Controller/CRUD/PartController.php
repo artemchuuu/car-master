@@ -19,9 +19,10 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 use const FILTER_VALIDATE_REGEXP;
 
+#[Route('/parts')]
 final class PartController extends AbstractController
 {
-    #[Route('/parts', name: 'app_crud_part_index', methods: ['GET'])]
+    #[Route('/', name: 'app_crud_part_index', methods: ['GET'])]
     public function index(
         PartRepository $parts,
         #[MapQueryParameter(
@@ -35,16 +36,18 @@ final class PartController extends AbstractController
         ]);
     }
 
-    #[Route('parts/{id}', name: 'app_crud_part_show', requirements: ['id' => '\d+'], methods: ['GET'])]
+    #[Route('/{id}', name: 'app_crud_part_show', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function show(Part $part): Response
     {
         return $this->render('crud/parts/show.html.twig', ['part' => $part]);
     }
 
-    #[Route('parts/{id}/_delete', name: 'app_crud_part_delete')]
+    #[Route('/{id}/_delete', name: 'app_crud_part_delete')]
     #[IsGranted('ROLE_ADMIN')] // дасть доступ тільки в тому випадку, якщо юзер має роль ROLE_ADMIN
-    public function delete(Part $part, EntityManagerInterface $entityManager): Response
-    {
+    public function delete(
+        Part $part,
+        EntityManagerInterface $entityManager
+    ): Response {
         $entityManager->remove($part);
         $entityManager->flush();
 
@@ -53,7 +56,7 @@ final class PartController extends AbstractController
         return $this->redirectToRoute('app_crud_part_index');
     }
 
-    #[Route('parts/new', name: 'app_crud_part_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_crud_part_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN'); // альтернативний варіант
@@ -75,7 +78,7 @@ final class PartController extends AbstractController
         ]);
     }
 
-    #[Route('parts/{id}/_update', name: 'app_crud_part_update', requirements: ['id' => Requirement::POSITIVE_INT], methods: [
+    #[Route('/{id}/_update', name: 'app_crud_part_update', requirements: ['id' => Requirement::POSITIVE_INT], methods: [
         'GET',
         'POST'
     ])]

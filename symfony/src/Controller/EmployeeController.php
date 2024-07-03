@@ -11,9 +11,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[Route('/employee')]
 final class EmployeeController extends AbstractController
 {
-    #[Route('/employee/{id}', name: 'app_employee')]
+    #[Route('/{id}', name: 'app_employee')]
     public function index(string $id, EntityManagerInterface $entityManager): Response
     {
         $employee = $entityManager->getRepository(Employee::class)->find($id);
@@ -21,7 +22,7 @@ final class EmployeeController extends AbstractController
         return new JsonResponse($employee->getFullInfo());
     }
 
-    #[Route('/employee/{firstName}/{email}', name: 'app_employee_create')]
+    #[Route('/{firstName}/{email}', name: 'app_employee_create')]
     public function create(
         string $firstName,
         string $email,
@@ -40,7 +41,7 @@ final class EmployeeController extends AbstractController
         return new JsonResponse($employeeManager->createEmployee($company)->getFullInfo());
     }
 
-    #[Route('/employees/high-salary/{count}', name: 'app_employee_high_salary')]
+    #[Route('/high-salary/{count}', name: 'app_employee_high_salary')]
     public function EmployeesWithHighestSalary(string $count, EntityManagerInterface $entityManager): Response
     {
         $employeeRepository = $entityManager->getRepository(Employee::class);

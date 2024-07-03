@@ -4,33 +4,40 @@ declare(strict_types=1);
 
 namespace CarMaster\Entity;
 
+use App\Repository\ClientRepository;
 use CarMaster\Entity\Exceptions\NameValidationException;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\JoinTable;
-use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\Table;
+use Symfony\Component\Serializer\Attribute as Serialize;
 
-#[Entity]
+#[Entity(repositoryClass: ClientRepository::class)]
 #[Table(name: 'client')]
 class Client
 {
     #[Id]
     #[GeneratedValue]
     #[Column(type: 'integer')]
+    #[Serialize\Groups(['car_list', 'car_item'])]
     private int $id;
 
     #[Column(type: 'string', length: 150)]
+    #[Serialize\Groups(['car_list', 'car_item'])]
     private string $name;
 
     #[Column(type: 'string', length: 150)]
+    #[Serialize\Groups(['car_list', 'car_item'])]
     private string $surname;
 
-    #[ManyToMany(targetEntity: Car::class, inversedBy: 'clients')]
-    #[JoinTable(name: 'client_car')]
+    #[OneToMany(targetEntity: Car::class, mappedBy: 'client')]
+    #[JoinColumn(name: 'car_id', referencedColumnName: 'id')]
+    #[Serialize\Groups(['car_item'])]
+    #[Serialize\MaxDepth(1)]
     private Collection $cars;
 
     public function getId(): int

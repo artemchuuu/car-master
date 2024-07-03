@@ -9,9 +9,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[Route('/car')]
 final class CarController extends AbstractController
 {
-    #[Route('/car/{name}/{surname}', name: 'app_car_create')]
+    #[Route('/{name}/{surname}', name: 'app_car_create')]
     public function create(
         string $name,
         string $surname,
