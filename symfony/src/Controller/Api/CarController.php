@@ -13,7 +13,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Exception\ORMException;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
@@ -47,14 +46,10 @@ class CarController extends AbstractController
         #[MapRequestPayload] CreateCar $createCar,
         CarManager $carManager,
         SerializerInterface $serializer
-    ): JsonResponse {
-        $car = $carManager->createCarApi($createCar);
-
-        $data = $serializer->serialize($car, 'json', [
-            'groups' => ['car_item']
-        ]);
-
-        return new JsonResponse($data, Response::HTTP_CREATED);
+    ): Response {
+        return new Response($serializer->serialize($carManager->createCarApi($createCar), 'json', [
+            'groups' => ['car_create']
+        ]), Response::HTTP_CREATED);
     }
 
     #[Route('/{id}', methods: ['PATCH'], format: 'json')]
@@ -63,14 +58,10 @@ class CarController extends AbstractController
         #[MapRequestPayload] UpdateCar $updateCar,
         CarManager $carManager,
         SerializerInterface $serializer
-    ): JsonResponse {
-        $car = $carManager->updateCar($updateCar, $car);
-
-        $data = $serializer->serialize($car, 'json', [
-            'groups' => ['car_item']
-        ]);
-
-        return new JsonResponse($data);
+    ): Response {
+        return new Response($serializer->serialize($carManager->updateCar($updateCar, $car), 'json', [
+            'groups' => ['car_create']
+        ]));
     }
 
     #[Route('/{id}', methods: ['DELETE'], format: 'json')]
