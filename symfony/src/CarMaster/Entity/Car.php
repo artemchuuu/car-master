@@ -21,19 +21,19 @@ class Car
     #[Id]
     #[GeneratedValue]
     #[Column(type: 'integer')]
-    #[Serialize\Groups(['car_list', 'car_item', 'car_create'])]
+    #[Serialize\Groups(['car_list', 'car_item', 'car_info'])]
     private int $id;
 
     #[Column(type: 'string', length: 150)]
-    #[Serialize\Groups(['car_list', 'car_item', 'car_create'])]
+    #[Serialize\Groups(['car_list', 'car_item', 'car_info'])]
     private string $brand;
 
     #[Column(type: 'string', length: 150)]
-    #[Serialize\Groups(['car_list', 'car_item', 'car_create'])]
+    #[Serialize\Groups(['car_list', 'car_item', 'car_info'])]
     private string $model;
 
     #[Column(type: 'string', length: 150)]
-    #[Serialize\Groups(['car_list', 'car_item', 'car_create'])]
+    #[Serialize\Groups(['car_list', 'car_item', 'car_info'])]
     private string $vinCode;
 
     #[ManyToOne(targetEntity: Client::class, inversedBy: 'cars')]

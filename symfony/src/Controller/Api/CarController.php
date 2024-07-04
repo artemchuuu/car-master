@@ -48,7 +48,7 @@ class CarController extends AbstractController
         SerializerInterface $serializer
     ): Response {
         return new Response($serializer->serialize($carManager->createCarApi($createCar), 'json', [
-            'groups' => ['car_create']
+            'groups' => ['car_info']
         ]), Response::HTTP_CREATED);
     }
 
@@ -60,7 +60,7 @@ class CarController extends AbstractController
         SerializerInterface $serializer
     ): Response {
         return new Response($serializer->serialize($carManager->updateCar($updateCar, $car), 'json', [
-            'groups' => ['car_create']
+            'groups' => ['car_info']
         ]));
     }
 
