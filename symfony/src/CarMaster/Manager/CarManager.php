@@ -28,38 +28,24 @@ readonly class CarManager
     }
 
     /**
-     * @param Client $client
-     * @return Car
-     */
-    public function createCar(Client $client): Car
-    {
-        $car = new Car();
-        $car->setBrand($this->faker->word());
-        $car->setModel($this->faker->word());
-        $car->setVinCode($this->faker->randomLetter());
-        $car->setClient($client);
-        $this->entityManager->persist($car);
-        $this->entityManager->flush();
-
-        return $car;
-    }
-
-    /**
      * @param CreateCar $createCar
+     * @param Client|null $client
      * @return Car
      */
-    public function createCarApi(CreateCar $createCar): Car
+    public function createCar(CreateCar $createCar, ?Client $client = null): Car
     {
-        $client = $this->clientRepository->find($createCar->clientId);
+        if (!$client) {
+            $client = $this->clientRepository->find($createCar->clientId);
+        }
 
         if (!$client) {
             throw new EntityNotFoundException('Client is not found.');
         }
 
         $car = new Car();
-        $car->setBrand($createCar->brand);
-        $car->setModel($createCar->model);
-        $car->setVinCode($createCar->vinCode);
+        $car->setBrand($createCar->brand ?: $this->faker->word());
+        $car->setModel($createCar->model ?: $this->faker->word());
+        $car->setVinCode($createCar->vinCode ?: $this->faker->randomLetter());
         $car->setClient($client);
         $this->entityManager->persist($car);
         $this->entityManager->flush();

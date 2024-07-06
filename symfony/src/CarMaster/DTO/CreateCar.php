@@ -10,16 +10,16 @@ class CreateCar
 {
     public function __construct(
         #[Assert\Positive]
-        public int $clientId,
+        public ?int $clientId = null,
 
         #[Assert\Length(min: 1, max: 255)]
-        public string $brand,
+        public ?string $brand = null,
 
         #[Assert\Length(min: 1, max: 255)]
-        public string $model,
+        public ?string $model = null,
 
         #[Assert\Length(max: 17)]
-        public string $vinCode
+        public ?string $vinCode = null
     ) {
     }
 }

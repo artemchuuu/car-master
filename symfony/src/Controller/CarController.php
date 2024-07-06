@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use CarMaster\DTO\CreateCar;
 use CarMaster\Manager\CarManager;
 use Doctrine\ORM\EntityManagerInterface;
 use CarMaster\Entity\Client;
@@ -17,7 +18,7 @@ final class CarController extends AbstractController
         string $name,
         string $surname,
         EntityManagerInterface $entityManager,
-        CarManager $carManager
+        CarManager $carManager,
     ): JsonResponse {
         $client = $entityManager->getRepository(Client::class)->findOneBy([
             'name' => $name,
@@ -28,6 +29,6 @@ final class CarController extends AbstractController
             throw $this->createNotFoundException('Client not found');
         }
 
-        return new JsonResponse($carManager->createCar($client)->getFullInfo());
+        return new JsonResponse($carManager->createCar(new CreateCar(), $client)->getFullInfo());
     }
 }
