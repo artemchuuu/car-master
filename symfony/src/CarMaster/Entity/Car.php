@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\Table;
+use Symfony\Component\Serializer\Attribute as Serialize;
 
 #[Entity(repositoryClass: CarRepository::class)]
 #[Table(name: 'car')]
@@ -20,19 +21,25 @@ class Car
     #[Id]
     #[GeneratedValue]
     #[Column(type: 'integer')]
+    #[Serialize\Groups(['car_list', 'car_item', 'car_info'])]
     private int $id;
 
     #[Column(type: 'string', length: 150)]
+    #[Serialize\Groups(['car_list', 'car_item', 'car_info'])]
     private string $brand;
 
     #[Column(type: 'string', length: 150)]
+    #[Serialize\Groups(['car_list', 'car_item', 'car_info'])]
     private string $model;
 
     #[Column(type: 'string', length: 150)]
+    #[Serialize\Groups(['car_list', 'car_item', 'car_info'])]
     private string $vinCode;
 
     #[ManyToOne(targetEntity: Client::class, inversedBy: 'cars')]
     #[JoinColumn(name: 'client_id', referencedColumnName: 'id')]
+    #[Serialize\Groups(['car_list', 'car_item'])]
+    #[Serialize\MaxDepth(1)]
     private Client $client;
 
     /**
@@ -113,14 +120,22 @@ class Car
             'brand' => $this->getBrand(),
             'model' => $this->getModel(),
             'vinCode' => $this->getVinCode(),
+            'client' => $this->getClient()->getFullInfo(),
         ];
     }
 
+    /**
+     * @return Client
+     */
     public function getClient(): Client
     {
         return $this->client;
     }
 
+    /**
+     * @param Client $client
+     * @return void
+     */
     public function setClient(Client $client): void
     {
         $this->client = $client;

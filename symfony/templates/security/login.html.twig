@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="login">
+        <h2>Log in</h2>
+
+        {% if error %}
+            <div class="login-error">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+
+        <form action="{{ path('app_login') }}" method="post">
+            <label for="username">Email</label>
+            <input type="text" id="username" name="_username" value="{{ last_username }}">
+            <br>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="_password">
+            <br>
+            <button type="submit">Log in</button>
+        </form>
+        or
+        <div class="or-signup">
+            <a href="{{ path('app_registration') }}">Sign up</a>
+        </div>
+    </div>
+{% endblock %}
