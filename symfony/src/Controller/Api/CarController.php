@@ -9,8 +9,10 @@ use CarMaster\DTO\CreateCar;
 use App\Repository\CarRepository;
 use CarMaster\Entity\Car;
 use CarMaster\Manager\CarManager;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Exception\ORMException;
+use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,11 +36,32 @@ class CarController extends AbstractController
     }
 
     #[Route('/{id}', methods: ['GET'], format: 'json')]
-    public function get(Car $car, SerializerInterface $serializer): Response
-    {
-        return new Response($serializer->serialize($car, 'json', [
-            'groups' => ['car_item']
-        ]));
+    public function get(
+        Car $car,
+        SerializerInterface $serializer,
+        CarRepository $carRepository,
+        CacheItemPoolInterface $cache
+    ): Response {
+        if ($car) {
+            $carItem = $cache->getItem('car.get.' . $car->getVinCode());
+
+            if (!$carItem->isHit()) {
+                $car = $carRepository->findById($car->getId());
+                if (!$car) {
+                    return new Response(null, Response::HTTP_NOT_FOUND);
+                }
+                $json = $serializer->serialize($car, 'json', ['groups' => ['car_item']]);
+                $carItem->set($json);
+                $carItem->expiresAt(new DateTime('+1 hour'));
+                $cache->save($carItem);
+            } else {
+                $json = $carItem->get();
+            }
+        } else {
+            return new Response(null, Response::HTTP_NOT_FOUND);
+        }
+
+        return new Response($json, Response::HTTP_OK, ['Content-Type' => 'application/json']);
     }
 
     #[Route('/', methods: ['POST'], format: 'json')]

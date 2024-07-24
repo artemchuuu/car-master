@@ -42,5 +42,11 @@ services:
     env_file:
       - .env
 
+  redis:
+    image: redis:latest
+    volumes:
+      - redis:/data
+
 volumes:
   db:
+  redis:
