@@ -20,9 +20,6 @@ class ServiceCostCalculatorTest extends TestCase
         $serviceOrder->method('getPart')->willReturn($part);
         $serviceOrder->method('getWorkHours')->willReturn(5);
 
-        $this->assertInstanceOf(Part::class, $part);
-        $this->assertInstanceOf(ServiceOrder::class, $serviceOrder);
-
         $serviceOrderCalculatorSUT = new ServiceCostCalculator($logger);
         $totalCost = $serviceOrderCalculatorSUT->calculateTotalCost($serviceOrder);
         $this->assertEquals(250.1, $totalCost);
