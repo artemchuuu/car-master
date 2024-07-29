@@ -63,9 +63,9 @@ class Part
     }
 
     /**
-     * @return float|null
+     * @return float
      */
-    public function getPrice(): ?float
+    public function getPrice(): float
     {
         return $this->price;
     }

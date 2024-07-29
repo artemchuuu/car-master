@@ -8,7 +8,6 @@
          bootstrap="tests/bootstrap.php"
          convertDeprecationsToExceptions="false"
 >
-    <!-- Налаштування PHP -->
     <php>
         <ini name="display_errors" value="1" />
         <ini name="error_reporting" value="-1" />
@@ -18,14 +17,12 @@
         <server name="SYMFONY_PHPUNIT_VERSION" value="9.5" />
     </php>
 
-    <!-- Це ізольований набір тестів, їх можна створювати багато. Головне давати їм назву -->
     <testsuites>
         <testsuite name="Project Test Suite">
             <directory>tests</directory>
         </testsuite>
     </testsuites>
 
-    <!-- Калькуляція покриття тестами нашої бізнес логіки -->
     <coverage processUncoveredFiles="true">
         <include>
             <directory suffix=".php">src</directory>

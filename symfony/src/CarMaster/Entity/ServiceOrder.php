@@ -37,16 +37,6 @@ class ServiceOrder implements ServiceOrderInterface
     private int $workHours;
 
     /**
-     * @param int $serviceNumber
-     * @param Car $car
-     * @param Part $part
-     * @param int $workHours
-     */
-    public function __construct(int $serviceNumber, Car $car, Part $part, int $workHours)
-    {
-    }
-
-    /**
      * @return int
      */
     public function getId(): int
